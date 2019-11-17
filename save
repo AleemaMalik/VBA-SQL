@@ -1,0 +1,511 @@
+'This module handles all the tables upon a save
+'If the Recipe ID does not exist all tables will be inserted into with the new data
+'If the Recipe ID does exist all tables will be updated with the new data
+ 
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * *         INSERT ON SAVE        * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * *     Master      * * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Function InsertMaster(RcpID As String, cnSrc As ADODB.Connection)
+    Dim strSql As String
+    Dim cmd As New ADODB.Command
+    Dim rsSrc As New ADODB.Recordset
+    Dim TagSrc As MasterTags
+    Dim DateValue As String
+    On Error GoTo ErrHandler
+ 
+    ' Records the current dateand time that the insert is made
+    ' Format: Jul 18 2019 10:30 AM
+    DateValue = Format(Date, "mmm d yyyy") & " " & Format(Time, "h:mm AM/PM")
+   
+    ' Loads all the tags for the master table
+    TagSrc = TGroup.LoadMasterTags
+ 
+   
+    ' Inserts the new recipe into the master table
+    strSql = " INSERT INTO master VALUES('"
+    strSql = strSql & TagSrc.RcpID.Value & "','" & TagSrc.RcpGrade.Value & "','" & TagSrc.RcpRough.Value & "','" & TagSrc.RcpFinish.Value & "','" & TagSrc.RcpDsc.Value & "','" & DateValue & "')"
+    cmd.ActiveConnection = cnSrc
+    rsSrc.Open strSql, cnSrc
+ 
+    Exit Function
+   
+ErrHandler:
+    MsgBox Err.Description
+ 
+End Function
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * *         INSERT ON SAVE        * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * *     Inducto B     * * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Function InductoBInsert(RcpID As String, cnSrc As ADODB.Connection)
+    Dim strSql As String
+    Dim cmd As New ADODB.Command
+    Dim rsSrc As New ADODB.Recordset
+    Dim AllTags As InductoBGroup
+    Dim TagSrc As InductoBTags
+    On Error GoTo ErrHandler
+   
+    AllTags = TGroup.LoadInductoBGroup
+    TagSrc = AllTags.DB
+   
+    strSql = " INSERT INTO Inducto_B VALUES('"
+    strSql = strSql & RcpID & "','" & TagSrc.RcpGrade.Value & "','" & TagSrc.K_indb_MINTEMP.Value & "','" & TagSrc.K_indb_TEMP.Value & "','" & TagSrc.K_rcp_bil_SIZE.Value & "','"
+    strSql = strSql & TagSrc.STD_CylConstant_RCP_RI_1.Value & "','" & TagSrc.STD_CylConstant_RCP_RI_2.Value & "','" & TagSrc.STD_CylConstant_RCP_RI_3.Value & "','" & TagSrc.STD_CylConstant_RCP_RI_4.Value & "','" & TagSrc.STD_CylConstant_RCP_RI_5.Value & "','" & TagSrc.STD_CylConstant_RCP_RI_6.Value & "','" & TagSrc.STD_CylConstant_RCP_RI_7.Value & "','" & TagSrc.STD_CylConstant_RCP_RI_8.Value & "','" & TagSrc.STD_CylConstant_RCP_RI_9.Value & "','" & TagSrc.STD_CylConstant_RCP_RI_10.Value & "','"
+    strSql = strSql & TagSrc.STD_CylConstantActual_RCP_RO_1.Value & "','" & TagSrc.STD_CylConstantActual_RCP_RO_2.Value & "','" & TagSrc.STD_CylConstantActual_RCP_RO_3.Value & "','" & TagSrc.STD_CylConstantActual_RCP_RO_4.Value & "','" & TagSrc.STD_CylConstantActual_RCP_RO_5.Value & "','" & TagSrc.STD_CylConstantActual_RCP_RO_6.Value & "','" & TagSrc.STD_CylConstantActual_RCP_RO_7.Value & "','" & TagSrc.STD_CylConstantActual_RCP_RO_8.Value & "','" & TagSrc.STD_CylConstantActual_RCP_RO_9.Value & "','" & TagSrc.STD_CylConstantActual_RCP_RO_10.Value & "','"
+    strSql = strSql & TagSrc.STD_SpareInt_RCP_RI_1.Value & "','" & TagSrc.STD_SpareInt_RCP_RI_2.Value & "')"
+    cmd.ActiveConnection = cnSrc
+    rsSrc.Open strSql, cnSrc
+   
+    Exit Function
+   
+ErrHandler:
+    MsgBox Err.Description
+ 
+End Function
+ 
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * *         INSERT ON SAVE        * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * *     Inducto A     * * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Function InductoAInsert(RcpID As String, cnSrc As ADODB.Connection)
+    Dim strSql As String
+    Dim cmd As New ADODB.Command
+    Dim rsSrc As New ADODB.Recordset
+    Dim AllTags As InductoAGroup
+    Dim TagSrc As InductoATags
+    On Error GoTo ErrHandler
+   
+    AllTags = TGroup.LoadInductoAGroup
+    TagSrc = AllTags.DB
+   
+    strSql = " INSERT INTO Inducto_A VALUES('"
+    strSql = strSql & RcpID & "','" & TagSrc.Q_inda_EXRATE.Value & "','" & TagSrc.RcpGrade.Value & "','" & TagSrc.Q_inda_MINTEMP.Value & "','" & TagSrc.Q_inda_RATE.Value & "','" & TagSrc.Q_inda_RBARS.Value & "','" & TagSrc.Q_inda_SQBARS.Value & "','" & TagSrc.Q_inda_TEMP.Value & "','" & TagSrc.Q_inda_bil_SIZE.Value & "','"
+    strSql = strSql & TagSrc.RI_DCH_RcpSET_1.Value & "','" & TagSrc.RI_DCH_RcpSET_2.Value & "','" & TagSrc.RI_DCH_RcpSET_3.Value & "','" & TagSrc.RI_DCH_RcpSET_4.Value & "','" & TagSrc.RI_DCH_RcpSET_5.Value & "','" & TagSrc.RI_DCH_RcpSET_6.Value & "','" & TagSrc.RI_DCH_RcpSET_7.Value & "','" & TagSrc.RI_DCH_RcpSET_8.Value & "','" & TagSrc.RI_DCH_RcpSET_9.Value & "','" & TagSrc.RI_DCH_RcpSET_10.Value & "','" & TagSrc.RI_DCH_RcpSET_11.Value & "','" & TagSrc.RI_DCH_RcpSET_12.Value & "','" & TagSrc.RI_DCH_RcpSET_13.Value & "','" & TagSrc.RI_DCH_RcpSET_14.Value & "','" & TagSrc.RI_DCH_RcpSET_15.Value & "','"
+    strSql = strSql & TagSrc.RI_ECH_RcpSET_1.Value & "','" & TagSrc.RI_ECH_RcpSET_2.Value & "','" & TagSrc.RI_ECH_RcpSET_3.Value & "','" & TagSrc.RI_ECH_RcpSET_4.Value & "','" & TagSrc.RI_ECH_RcpSET_5.Value & "','" & TagSrc.RI_ECH_RcpSET_6.Value & "','" & TagSrc.RI_ECH_RcpSET_7.Value & "','" & TagSrc.RI_ECH_RcpSET_8.Value & "','" & TagSrc.RI_ECH_RcpSET_9.Value & "','" & TagSrc.RI_ECH_RcpSET_10.Value & "','" & TagSrc.RI_ECH_RcpSET_11.Value & "','" & TagSrc.RI_ECH_RcpSET_12.Value & "','" & TagSrc.RI_ECH_RcpSET_13.Value & "','" & TagSrc.RI_ECH_RcpSET_14.Value & "','" & TagSrc.RI_ECH_RcpSET_15.Value & "')"
+    cmd.ActiveConnection = cnSrc
+    rsSrc.Open strSql, cnSrc
+   
+    Exit Function
+   
+ErrHandler:
+    MsgBox Err.Description
+ 
+End Function
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * *         INSERT ON SAVE        * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * *     K2_Setup      * * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Function K2SetupInsert(RcpID As String, cnSrc As ADODB.Connection)
+    Dim strSql As String
+    Dim cmd As New ADODB.Command
+    Dim rsSrc As New ADODB.Recordset
+    Dim AllTags As K2SetupGroup
+    Dim TagSrc As K2SetupTags
+    On Error GoTo ErrHandler
+ 
+    AllTags = TGroup.LoadK2SetupGroup
+    TagSrc = AllTags.DB
+ 
+    strSql = " INSERT INTO K2_Setup VALUES('"
+    strSql = strSql & RcpID & "','" & TagSrc.RcpGrade.Value & "','" & TagSrc.GEN_K2_ProdSchNo_RCP_RO.Value & "','" & TagSrc.GEN_K2_FinishSpeed_RCP_RI.Value & "','" & TagSrc.GEN_K2_EntrySpeed_RCP_RI.Value & "','" & TagSrc.GEN_K2_FinishingStand_RCP_RI.Value & "','" & TagSrc.GEN_K2_BilletSizeHot_RCP_RI.Value & "','" & TagSrc.GEN_K2_BilletAreaHot_RCP_RI.Value & "','" & TagSrc.GEN_K2_ProdSizeHot_RCP_RI.Value & "','" & TagSrc.GEN_K2_ProdSizeCold_RCP_RI.Value & "','" & TagSrc.GEN_K2_ProdAreaCold_RCP_RI.Value & "','" & TagSrc.GEN_K2_KFO_RCP_RI.Value & "','" & TagSrc.GEN_K2_ShrinkFactor_RCP_RI.Value & "','" & TagSrc.GEN_K2_BilletEntryTemp_RCP_RI.Value & "','" & TagSrc.GEN_K2_BlockID_RCP_RI.Value & "','"
+    strSql = strSql & TagSrc.GEN_K2_ContThrghPut_RCP_RI.Value & "','" & TagSrc.GEN_K2_CurProdInCycle_RCP_RI.Value & "','" & TagSrc.GEN_K2_NxtProdInCycle_RCP_RI.Value & "','" & TagSrc.K2_TEN_Tf_RCP_RI.Value & "','" & TagSrc.K2_TEN_TfActual_RCP_RO.Value & "','" & TagSrc.K2_TEN_SpareReal_RCP_RI.Value & "','"
+    strSql = strSql & TagSrc.STD_PassNumber_RCP_RI_1.Value & "','" & TagSrc.STD_PassNumber_RCP_RI_2.Value & "','" & TagSrc.STD_PassNumber_RCP_RI_3.Value & "','" & TagSrc.STD_PassNumber_RCP_RI_4.Value & "','" & TagSrc.STD_PassNumber_RCP_RI_5.Value & "','" & TagSrc.STD_PassNumber_RCP_RI_6.Value & "','" & TagSrc.STD_PassNumber_RCP_RI_7.Value & "','" & TagSrc.STD_PassNumber_RCP_RI_8.Value & "','" & TagSrc.STD_PassNumber_RCP_RI_9.Value & "','" & TagSrc.STD_PassNumber_RCP_RI_10.Value & "','"
+    strSql = strSql & TagSrc.STD_Config_RCP_RI_1.Value & "','" & TagSrc.STD_Config_RCP_RI_2.Value & "','" & TagSrc.STD_Config_RCP_RI_3.Value & "','" & TagSrc.STD_Config_RCP_RI_4.Value & "','" & TagSrc.STD_Config_RCP_RI_5.Value & "','" & TagSrc.STD_Config_RCP_RI_6.Value & "','" & TagSrc.STD_Config_RCP_RI_7.Value & "','" & TagSrc.STD_Config_RCP_RI_8.Value & "','" & TagSrc.STD_Config_RCP_RI_9.Value & "','" & TagSrc.STD_Config_RCP_RI_10.Value & "','" & TagSrc.STD_Config_RCP_RI_0.Value & "','"
+    strSql = strSql & TagSrc.STD_Mode_RCP_RI_1.Value & "','" & TagSrc.STD_Mode_RCP_RI_2.Value & "','" & TagSrc.STD_Mode_RCP_RI_3.Value & "','" & TagSrc.STD_Mode_RCP_RI_4.Value & "','" & TagSrc.STD_Mode_RCP_RI_5.Value & "','" & TagSrc.STD_Mode_RCP_RI_6.Value & "','" & TagSrc.STD_Mode_RCP_RI_7.Value & "','" & TagSrc.STD_Mode_RCP_RI_8.Value & "','" & TagSrc.STD_Mode_RCP_RI_9.Value & "','" & TagSrc.STD_Mode_RCP_RI_10.Value & "','"
+    strSql = strSql & TagSrc.STD_Reduction_RCP_RI_1.Value & "','" & TagSrc.STD_Reduction_RCP_RI_2.Value & "','" & TagSrc.STD_Reduction_RCP_RI_3.Value & "','" & TagSrc.STD_Reduction_RCP_RI_4.Value & "','" & TagSrc.STD_Reduction_RCP_RI_5.Value & "','" & TagSrc.STD_Reduction_RCP_RI_6.Value & "','" & TagSrc.STD_Reduction_RCP_RI_7.Value & "','" & TagSrc.STD_Reduction_RCP_RI_8.Value & "','" & TagSrc.STD_Reduction_RCP_RI_9.Value & "','" & TagSrc.STD_Reduction_RCP_RI_10.Value & "','"
+    strSql = strSql & TagSrc.STD_Area_RCP_RI_1.Value & "','" & TagSrc.STD_Area_RCP_RI_2.Value & "','" & TagSrc.STD_Area_RCP_RI_3.Value & "','" & TagSrc.STD_Area_RCP_RI_4.Value & "','" & TagSrc.STD_Area_RCP_RI_5.Value & "','" & TagSrc.STD_Area_RCP_RI_6.Value & "','" & TagSrc.STD_Area_RCP_RI_7.Value & "','" & TagSrc.STD_Area_RCP_RI_8.Value & "','" & TagSrc.STD_Area_RCP_RI_9.Value & "','" & TagSrc.STD_Area_RCP_RI_10.Value & "','"
+    strSql = strSql & TagSrc.STD_RollShape_RCP_RI_1.Value & "','" & TagSrc.STD_RollShape_RCP_RI_2.Value & "','" & TagSrc.STD_RollShape_RCP_RI_3.Value & "','" & TagSrc.STD_RollShape_RCP_RI_4.Value & "','" & TagSrc.STD_RollShape_RCP_RI_5.Value & "','" & TagSrc.STD_RollShape_RCP_RI_6.Value & "','" & TagSrc.STD_RollShape_RCP_RI_7.Value & "','" & TagSrc.STD_RollShape_RCP_RI_8.Value & "','" & TagSrc.STD_RollShape_RCP_RI_9.Value & "','" & TagSrc.STD_RollShape_RCP_RI_10.Value & "','"
+    strSql = strSql & TagSrc.STD_TangentAngle_RCP_RI_1.Value & "','" & TagSrc.STD_TangentAngle_RCP_RI_2.Value & "','" & TagSrc.STD_TangentAngle_RCP_RI_3.Value & "','" & TagSrc.STD_TangentAngle_RCP_RI_4.Value & "','" & TagSrc.STD_TangentAngle_RCP_RI_5.Value & "','" & TagSrc.STD_TangentAngle_RCP_RI_6.Value & "','" & TagSrc.STD_TangentAngle_RCP_RI_7.Value & "','" & TagSrc.STD_TangentAngle_RCP_RI_8.Value & "','" & TagSrc.STD_TangentAngle_RCP_RI_9.Value & "','" & TagSrc.STD_TangentAngle_RCP_RI_10.Value & "','"
+    strSql = strSql & TagSrc.STD_ORD_RCP_RI_1.Value & "','" & TagSrc.STD_ORD_RCP_RI_2.Value & "','" & TagSrc.STD_ORD_RCP_RI_3.Value & "','" & TagSrc.STD_ORD_RCP_RI_4.Value & "','" & TagSrc.STD_ORD_RCP_RI_5.Value & "','" & TagSrc.STD_ORD_RCP_RI_6.Value & "','" & TagSrc.STD_ORD_RCP_RI_7.Value & "','" & TagSrc.STD_ORD_RCP_RI_8.Value & "','" & TagSrc.STD_ORD_RCP_RI_9.Value & "','" & TagSrc.STD_ORD_RCP_RI_10.Value & "','"
+    strSql = strSql & TagSrc.STD_ERD_RCP_RO_1.Value & "','" & TagSrc.STD_ERD_RCP_RO_2.Value & "','" & TagSrc.STD_ERD_RCP_RO_3.Value & "','" & TagSrc.STD_ERD_RCP_RO_4.Value & "','" & TagSrc.STD_ERD_RCP_RO_5.Value & "','" & TagSrc.STD_ERD_RCP_RO_6.Value & "','" & TagSrc.STD_ERD_RCP_RO_7.Value & "','" & TagSrc.STD_ERD_RCP_RO_8.Value & "','" & TagSrc.STD_ERD_RCP_RO_9.Value & "','" & TagSrc.STD_ERD_RCP_RO_10.Value & "','"
+    strSql = strSql & TagSrc.STD_ERDActual_RCP_RO_1.Value & "','" & TagSrc.STD_ERDActual_RCP_RO_2.Value & "','" & TagSrc.STD_ERDActual_RCP_RO_3.Value & "','" & TagSrc.STD_ERDActual_RCP_RO_4.Value & "','" & TagSrc.STD_ERDActual_RCP_RO_5.Value & "','" & TagSrc.STD_ERDActual_RCP_RO_6.Value & "','" & TagSrc.STD_ERDActual_RCP_RO_7.Value & "','" & TagSrc.STD_ERDActual_RCP_RO_8.Value & "','" & TagSrc.STD_ERDActual_RCP_RO_9.Value & "','" & TagSrc.STD_ERDActual_RCP_RO_10.Value & "','"
+    strSql = strSql & TagSrc.STD_RollSetID_RCP_RI_1.Value & "','" & TagSrc.STD_RollSetID_RCP_RI_2.Value & "','" & TagSrc.STD_RollSetID_RCP_RI_3.Value & "','" & TagSrc.STD_RollSetID_RCP_RI_4.Value & "','" & TagSrc.STD_RollSetID_RCP_RI_5.Value & "','" & TagSrc.STD_RollSetID_RCP_RI_6.Value & "','" & TagSrc.STD_RollSetID_RCP_RI_7.Value & "','" & TagSrc.STD_RollSetID_RCP_RI_8.Value & "','" & TagSrc.STD_RollSetID_RCP_RI_9.Value & "','" & TagSrc.STD_RollSetID_RCP_RI_10.Value & "','"
+    strSql = strSql & TagSrc.STD_RPM_RCP_RO_1.Value & "','" & TagSrc.STD_RPM_RCP_RO_2.Value & "','" & TagSrc.STD_RPM_RCP_RO_3.Value & "','" & TagSrc.STD_RPM_RCP_RO_4.Value & "','" & TagSrc.STD_RPM_RCP_RO_5.Value & "','" & TagSrc.STD_RPM_RCP_RO_6.Value & "','" & TagSrc.STD_RPM_RCP_RO_7.Value & "','" & TagSrc.STD_RPM_RCP_RO_8.Value & "','" & TagSrc.STD_RPM_RCP_RO_9.Value & "','" & TagSrc.STD_RPM_RCP_RO_10.Value & "','"
+    strSql = strSql & TagSrc.STD_RPMCorr_RCP_RO_1.Value & "','" & TagSrc.STD_RPMCorr_RCP_RO_2.Value & "','" & TagSrc.STD_RPMCorr_RCP_RO_3.Value & "','" & TagSrc.STD_RPMCorr_RCP_RO_4.Value & "','" & TagSrc.STD_RPMCorr_RCP_RO_5.Value & "','" & TagSrc.STD_RPMCorr_RCP_RO_6.Value & "','" & TagSrc.STD_RPMCorr_RCP_RO_7.Value & "','" & TagSrc.STD_RPMCorr_RCP_RO_8.Value & "','" & TagSrc.STD_RPMCorr_RCP_RO_9.Value & "','" & TagSrc.STD_RPMCorr_RCP_RO_10.Value & "','"
+    strSql = strSql & TagSrc.STD_LeadSpeed_RCP_RI_1.Value & "','" & TagSrc.STD_LeadSpeed_RCP_RI_2.Value & "','" & TagSrc.STD_LeadSpeed_RCP_RI_3.Value & "','" & TagSrc.STD_LeadSpeed_RCP_RI_4.Value & "','" & TagSrc.STD_LeadSpeed_RCP_RI_5.Value & "','" & TagSrc.STD_LeadSpeed_RCP_RI_6.Value & "','" & TagSrc.STD_LeadSpeed_RCP_RI_7.Value & "','" & TagSrc.STD_LeadSpeed_RCP_RI_8.Value & "','" & TagSrc.STD_LeadSpeed_RCP_RI_9.Value & "','" & TagSrc.STD_LeadSpeed_RCP_RI_10.Value & "','"
+    strSql = strSql & TagSrc.STD_ImpDrop_RCP_RI_1.Value & "','" & TagSrc.STD_ImpDrop_RCP_RI_2.Value & "','" & TagSrc.STD_ImpDrop_RCP_RI_3.Value & "','" & TagSrc.STD_ImpDrop_RCP_RI_4.Value & "','" & TagSrc.STD_ImpDrop_RCP_RI_5.Value & "','" & TagSrc.STD_ImpDrop_RCP_RI_6.Value & "','" & TagSrc.STD_ImpDrop_RCP_RI_7.Value & "','" & TagSrc.STD_ImpDrop_RCP_RI_8.Value & "','" & TagSrc.STD_ImpDrop_RCP_RI_9.Value & "','" & TagSrc.STD_ImpDrop_RCP_RI_10.Value & "','" & TagSrc.STD_Gear_SEL_RCP_RI.Value & "','"
+    strSql = strSql & TagSrc.STD_RollSetID2_RCP_RI_1.Value & "','" & TagSrc.STD_RollSetID2_RCP_RI_2.Value & "','" & TagSrc.STD_RollSetID2_RCP_RI_3.Value & "','" & TagSrc.STD_RollSetID2_RCP_RI_4.Value & "','" & TagSrc.STD_RollSetID2_RCP_RI_5.Value & "','" & TagSrc.STD_RollSetID2_RCP_RI_6.Value & "','" & TagSrc.STD_RollSetID2_RCP_RI_7.Value & "','" & TagSrc.STD_RollSetID2_RCP_RI_8.Value & "','" & TagSrc.STD_RollSetID2_RCP_RI_9.Value & "','" & TagSrc.STD_RollSetID2_RCP_RI_10.Value & "','"
+    strSql = strSql & TagSrc.STD_Rfact_RCP_RI_1.Value & "','" & TagSrc.STD_Rfact_RCP_RI_2.Value & "','" & TagSrc.STD_Rfact_RCP_RI_3.Value & "','" & TagSrc.STD_Rfact_RCP_RI_4.Value & "','" & TagSrc.STD_Rfact_RCP_RI_5.Value & "','" & TagSrc.STD_Rfact_RCP_RI_6.Value & "','" & TagSrc.STD_Rfact_RCP_RI_7.Value & "','" & TagSrc.STD_Rfact_RCP_RI_8.Value & "','" & TagSrc.STD_Rfact_RCP_RI_9.Value & "','" & TagSrc.STD_Rfact_RCP_RI_10.Value & "','"
+    strSql = strSql & TagSrc.STD_Gap_RCP_RI_1.Value & "','" & TagSrc.STD_Gap_RCP_RI_2.Value & "','" & TagSrc.STD_Gap_RCP_RI_3.Value & "','" & TagSrc.STD_Gap_RCP_RI_4.Value & "','" & TagSrc.STD_Gap_RCP_RI_5.Value & "','" & TagSrc.STD_Gap_RCP_RI_6.Value & "','" & TagSrc.STD_Gap_RCP_RI_7.Value & "','" & TagSrc.STD_Gap_RCP_RI_8.Value & "','" & TagSrc.STD_Gap_RCP_RI_9.Value & "','" & TagSrc.STD_Gap_RCP_RI_10.Value & "','"
+    strSql = strSql & TagSrc.STD_LinSpeed_RCP_RI_1.Value & "','" & TagSrc.STD_LinSpeed_RCP_RI_2.Value & "','" & TagSrc.STD_LinSpeed_RCP_RI_3.Value & "','" & TagSrc.STD_LinSpeed_RCP_RI_4.Value & "','" & TagSrc.STD_LinSpeed_RCP_RI_5.Value & "','" & TagSrc.STD_LinSpeed_RCP_RI_6.Value & "','" & TagSrc.STD_LinSpeed_RCP_RI_7.Value & "','" & TagSrc.STD_LinSpeed_RCP_RI_8.Value & "','" & TagSrc.STD_LinSpeed_RCP_RI_9.Value & "','" & TagSrc.STD_LinSpeed_RCP_RI_10.Value & "','"
+    strSql = strSql & TagSrc.STD_HECFront_RCP_RO_1.Value & "','" & TagSrc.STD_HECFront_RCP_RO_2.Value & "','" & TagSrc.STD_HECFront_RCP_RO_3.Value & "','" & TagSrc.STD_HECFront_RCP_RO_4.Value & "','" & TagSrc.STD_HECFront_RCP_RO_5.Value & "','" & TagSrc.STD_HECFront_RCP_RO_6.Value & "','" & TagSrc.STD_HECFront_RCP_RO_7.Value & "','" & TagSrc.STD_HECFront_RCP_RO_8.Value & "','" & TagSrc.STD_HECFront_RCP_RO_9.Value & "','" & TagSrc.STD_HECFront_RCP_RO_10.Value & "','"
+    strSql = strSql & TagSrc.STD_HECTail_RCP_RO_1.Value & "','" & TagSrc.STD_HECTail_RCP_RO_2.Value & "','" & TagSrc.STD_HECTail_RCP_RO_3.Value & "','" & TagSrc.STD_HECTail_RCP_RO_4.Value & "','" & TagSrc.STD_HECTail_RCP_RO_5.Value & "','" & TagSrc.STD_HECTail_RCP_RO_6.Value & "','" & TagSrc.STD_HECTail_RCP_RO_7.Value & "','" & TagSrc.STD_HECTail_RCP_RO_8.Value & "','" & TagSrc.STD_HECTail_RCP_RO_9.Value & "','" & TagSrc.STD_HECTail_RCP_RO_10.Value & "','"
+    strSql = strSql & TagSrc.STD_SpareReal_RCP_RI_1.Value & "','" & TagSrc.STD_SpareReal_RCP_RI_2.Value & "','" & TagSrc.STD_SpareReal_RCP_RI_3.Value & "','" & TagSrc.STD_SpareReal_RCP_RI_4.Value & "','" & TagSrc.STD_SpareReal_RCP_RI_5.Value & "','" & TagSrc.STD_SpareReal_RCP_RI_6.Value & "','" & TagSrc.STD_SpareReal_RCP_RI_7.Value & "','" & TagSrc.STD_SpareReal_RCP_RI_8.Value & "','" & TagSrc.STD_SpareReal_RCP_RI_9.Value & "','" & TagSrc.STD_SpareReal_RCP_RI_10.Value & "','"
+    strSql = strSql & TagSrc.STD_SpareInt_RCP_RI_1.Value & "','" & TagSrc.STD_SpareInt_RCP_RI_2.Value & "','" & TagSrc.STD_SpareInt_RCP_RI_3.Value & "','" & TagSrc.STD_SpareInt_RCP_RI_4.Value & "','" & TagSrc.STD_SpareInt_RCP_RI_5.Value & "','" & TagSrc.STD_SpareInt_RCP_RI_6.Value & "','" & TagSrc.STD_SpareInt_RCP_RI_7.Value & "','" & TagSrc.STD_SpareInt_RCP_RI_8.Value & "','" & TagSrc.STD_SpareInt_RCP_RI_9.Value & "','" & TagSrc.STD_SpareInt_RCP_RI_10.Value & "','"
+    strSql = strSql & TagSrc.CNVR2_SpeedTrim_RCP_RI.Value & "','" & TagSrc.CNVR2_SpeedRefRPM_RCP_RI.Value & "','" & TagSrc.CNVR2_RPM_RCP_RO.Value & "','" & TagSrc.CVNR2_SpareReal_RCP_RI.Value & "','" & TagSrc.K2_HEC_TfHead_RCP_RI.Value & "','" & TagSrc.K2_HEC_TfTail_RCP_RI.Value & "','" & TagSrc.K2_HEC_TfHeadRampRateFac_RCP_RI.Value & "','" & TagSrc.K2_HEC_TfTailRampRateFac_RCP_RI.Value & "','" & TagSrc.K2_HEC_TfTimeDelayFact_RCP_RI.Value & "','" & TagSrc.K2_HEC_TfHeadAccTime_RCP_RO.Value & "','" & TagSrc.K2_HEC_TfTailAccTime_RCP_RO.Value & "','"
+    strSql = strSql & TagSrc.K2_HEC_TfTimeDelay_RCP_RO.Value & "','" & TagSrc.K2_HEC_SpareReal_RCP_RO.Value & "','" & TagSrc.LPR_Config_RCP_RI.Value & "','" & TagSrc.LPR_HeightSetpoint_RCP_RI.Value & "','" & TagSrc.LRP_UpReacTime_RCP_RI.Value & "','" & TagSrc.LPR_DnReacTime_RCP_RI.Value & "','" & TagSrc.LPR_Spare_RCP_RI.Value & "','"
+    strSql = strSql & TagSrc.GEN_K2_SpareIntArr1_RCP_RI_1.Value & "','" & TagSrc.GEN_K2_SpareIntArr1_RCP_RI_2.Value & "','" & TagSrc.GEN_K2_SpareIntArr1_RCP_RI_3.Value & "','" & TagSrc.GEN_K2_SpareIntArr1_RCP_RI_4.Value & "','" & TagSrc.GEN_K2_SpareIntArr1_RCP_RI_5.Value & "','" & TagSrc.GEN_K2_SpareIntArr1_RCP_RI_6.Value & "','" & TagSrc.GEN_K2_SpareIntArr1_RCP_RI_7.Value & "','" & TagSrc.GEN_K2_SpareIntArr1_RCP_RI_8.Value & "','" & TagSrc.GEN_K2_SpareIntArr1_RCP_RI_9.Value & "','" & TagSrc.GEN_K2_SpareIntArr1_RCP_RI_10.Value & "','"
+    strSql = strSql & TagSrc.GEN_K2_SpareIntArr2_RCP_RI_1.Value & "','" & TagSrc.GEN_K2_SpareIntArr2_RCP_RI_2.Value & "','" & TagSrc.GEN_K2_SpareIntArr2_RCP_RI_3.Value & "','" & TagSrc.GEN_K2_SpareIntArr2_RCP_RI_4.Value & "','" & TagSrc.GEN_K2_SpareIntArr2_RCP_RI_5.Value & "','" & TagSrc.GEN_K2_SpareIntArr2_RCP_RI_6.Value & "','" & TagSrc.GEN_K2_SpareIntArr2_RCP_RI_7.Value & "','" & TagSrc.GEN_K2_SpareIntArr2_RCP_RI_8.Value & "','" & TagSrc.GEN_K2_SpareIntArr2_RCP_RI_9.Value & "','" & TagSrc.GEN_K2_SpareIntArr2_RCP_RI_10.Value & "','"
+    strSql = strSql & TagSrc.GEN_K2_SpareIntArr3_RCP_RI_1.Value & "','" & TagSrc.GEN_K2_SpareIntArr3_RCP_RI_2.Value & "','" & TagSrc.GEN_K2_SpareIntArr3_RCP_RI_3.Value & "','" & TagSrc.GEN_K2_SpareIntArr3_RCP_RI_4.Value & "','" & TagSrc.GEN_K2_SpareIntArr3_RCP_RI_5.Value & "','" & TagSrc.GEN_K2_SpareIntArr3_RCP_RI_6.Value & "','" & TagSrc.GEN_K2_SpareIntArr3_RCP_RI_7.Value & "','" & TagSrc.GEN_K2_SpareIntArr3_RCP_RI_8.Value & "','" & TagSrc.GEN_K2_SpareIntArr3_RCP_RI_9.Value & "','" & TagSrc.GEN_K2_SpareIntArr3_RCP_RI_10.Value & "','"
+    strSql = strSql & TagSrc.GEN_K2_SpareRealArr1_RCP_RI_1.Value & "','" & TagSrc.GEN_K2_SpareRealArr1_RCP_RI_2.Value & "','" & TagSrc.GEN_K2_SpareRealArr1_RCP_RI_3.Value & "','" & TagSrc.GEN_K2_SpareRealArr1_RCP_RI_4.Value & "','" & TagSrc.GEN_K2_SpareRealArr1_RCP_RI_5.Value & "','" & TagSrc.GEN_K2_SpareRealArr1_RCP_RI_6.Value & "','" & TagSrc.GEN_K2_SpareRealArr1_RCP_RI_7.Value & "','" & TagSrc.GEN_K2_SpareRealArr1_RCP_RI_8.Value & "','" & TagSrc.GEN_K2_SpareRealArr1_RCP_RI_9.Value & "','" & TagSrc.GEN_K2_SpareRealArr1_RCP_RI_10.Value & "','"
+    strSql = strSql & TagSrc.GEN_K2_SpareRealArr2_RCP_RI_1.Value & "','" & TagSrc.GEN_K2_SpareRealArr2_RCP_RI_2.Value & "','" & TagSrc.GEN_K2_SpareRealArr2_RCP_RI_3.Value & "','" & TagSrc.GEN_K2_SpareRealArr2_RCP_RI_4.Value & "','" & TagSrc.GEN_K2_SpareRealArr2_RCP_RI_5.Value & "','" & TagSrc.GEN_K2_SpareRealArr2_RCP_RI_6.Value & "','" & TagSrc.GEN_K2_SpareRealArr2_RCP_RI_7.Value & "','" & TagSrc.GEN_K2_SpareRealArr2_RCP_RI_8.Value & "','" & TagSrc.GEN_K2_SpareRealArr2_RCP_RI_9.Value & "','" & TagSrc.GEN_K2_SpareRealArr2_RCP_RI_10.Value & "','"
+    strSql = strSql & TagSrc.GEN_K2_BarPassageTime_RCP_RI.Value & "','" & TagSrc.GEN_K2_BarSafetyTime_RCP_RI.Value & "','" & TagSrc.K2_HEC_TfTailTimeDelay_RCP_RO.Value & "','" & TagSrc.GEN_K2_ProdSize_RCP_RI.Value & "','" & TagSrc.GEN_K2_LinSpeed_RCP_RI.Value & "')"
+    cmd.ActiveConnection = cnSrc
+    rsSrc.Open strSql, cnSrc
+ 
+    Exit Function
+   
+ErrHandler:
+    MsgBox Err.Description
+   
+End Function
+ 
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * *         INSERT ON SAVE        * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * *     Kocks_Setup       * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Function KocksSetupInsert(RcpID As String, cnSrc As ADODB.Connection)
+    Dim strSql As String
+    Dim cmd As New ADODB.Command
+    Dim rsSrc As New ADODB.Recordset
+    Dim AllTags As KocksSetupGroup
+    Dim TagSrc As KocksSetupTags
+    On Error GoTo ErrHandler
+ 
+    AllTags = TGroup.LoadKocksSetupGroup
+    TagSrc = AllTags.DB
+ 
+    strSql = " INSERT INTO Kocks_Setup (RcpID,RcpGrade, K_rcp_COIL_AMP, K_rcp_COIL_FREQ, K_rcp_COIL_SREF, K_rcp_COIL_TRIM, K_rcp_COIL_WOBBLE, K_rcp_CONV_SREF, K_rcp_CONV_TRIM, K_rcp_EPR_SREF, K_rcp_EPR_Trim, K_rcp_H10_AQ, K_rcp_H10_DI, K_rcp_H10_DS, K_rcp_H10_GEAR_ratio, K_rcp_H10_LEAD, K_rcp_H10_SREF, K_rcp_H10_headSREF, K_rcp_H10_tailSREF, K_rcp_H20_AQ, K_rcp_H20_DI, K_rcp_H20_DS, K_rcp_H20_GEAR_ratio, K_rcp_H20_LEAD, K_rcp_H20_SREF, K_rcp_H20_headSREF, K_rcp_H20_tailSREF, K_rcp_H30_AQ, K_rcp_H30_DI, K_rcp_H30_DS, K_rcp_H30_GEAR_ratio, K_rcp_H30_LEAD, K_rcp_H30_SREF, K_rcp_HEC_HdDlyT, K_rcp_HEC_HdRampT, K_rcp_HEC_TlDlyT, K_rcp_HEC_TlRampT, K_rcp_PR1_SREF, K_rcp_PR1_TRIM, K_rcp_PR2_SREF, K_rcp_PR2_TRIM, K_rcp_PR3_DI, K_rcp_PR3_GearPos1, K_rcp_PR3_GearPos2, K_rcp_PR3_SREF, K_rcp_PR3_TRIM, K_rcp_QuenchT, K_rcp_Rsh_DivCut, K_rcp_Rsh_DivTrim, K_rcp_Rsh_GearPos1, K_rcp_Rsh_GearPos2, K_rcp_Rsh_HdCrop, K_rcp_Rsh_HdCropCycT, K_rcp_Rsh_HdCropDlyT, K_rcp_Rsh_HdCut, K_rcp_Rsh_HdLength, K_rcp_Rsh_HdTrim," & _
+    "K_rcp_Rsh_Length, K_rcp_Rsh_STrim, K_rcp_Rsh_TlCrop, K_rcp_Rsh_TlCropCycT, K_rcp_Rsh_TlCropDlyT, K_rcp_Rsh_TlCut, K_rcp_Rsh_TlLength, K_rcp_Rsh_TlTrim, K_rcp_SYS_Bar, K_rcp_SYS_Coil, K_rcp_Sys_BarPassST, K_rcp_Sys_BarPassT, K_rcp_Sys_LinSP_Perc, K_rcp_Sys_LinSP_Perc2, K_rcp_Sys_LinSP_Rate, K_rcp_bil_SIZE, K_rcp_mill_CONFIG_1, K_rcp_mill_CONFIG_2, K_rcp_mill_CONFIG_3, K_rcp_mill_CONFIG_4, K_rcp_mill_CONFIG_5, K_rcp_mill_CONFIG_6, K_rcp_mill_CONFIG_7, K_rcp_mill_CONFIG_8, K_rcp_mill_CONFIG_9, K_rcp_mill_CONFIG_10, K_rcp_mill_EntrySpeed, K_rcp_mill_GEAR_ratio, K_rcp_mill_SPEED, K_rcp_prod_SIZE, K_rcp_pshear_head_CROP, K_rcp_pshear_tail_CROP) VALUES('"
+    strSql = strSql & RcpID & "','" & TagSrc.RcpGrade.Value & "','" & TagSrc.K_rcp_COIL_AMP.Value & "','" & TagSrc.K_rcp_COIL_FREQ.Value & "','" & TagSrc.K_rcp_COIL_SREF.Value & "','" & TagSrc.K_rcp_COIL_TRIM.Value & "','" & TagSrc.K_rcp_COIL_WOBBLE.Value & "','" & TagSrc.K_rcp_CONV_SREF.Value & "','" & TagSrc.K_rcp_CONV_TRIM.Value & "','" & TagSrc.K_rcp_EPR_SREF.Value & "','" & TagSrc.K_rcp_EPR_Trim.Value & "','" & TagSrc.K_rcp_H10_AQ.Value & "','" & TagSrc.K_rcp_H10_DI.Value & "','" & TagSrc.K_rcp_H10_DS.Value & "','" & TagSrc.K_rcp_H10_GEAR_ratio.Value & "','" & TagSrc.K_rcp_H10_LEAD.Value & "','"
+    strSql = strSql & TagSrc.K_rcp_H10_SREF.Value & "','" & TagSrc.K_rcp_H10_headSREF.Value & "','" & TagSrc.K_rcp_H10_tailSREF.Value & "','" & TagSrc.K_rcp_H20_AQ.Value & "','" & TagSrc.K_rcp_H20_DI.Value & "','" & TagSrc.K_rcp_H20_DS.Value & "','" & TagSrc.K_rcp_H20_GEAR_ratio.Value & "','" & TagSrc.K_rcp_H20_LEAD.Value & "','" & TagSrc.K_rcp_H20_SREF.Value & "','" & TagSrc.K_rcp_H20_headSREF.Value & "','" & TagSrc.K_rcp_H20_tailSREF.Value & "','" & TagSrc.K_rcp_H30_AQ.Value & "','" & TagSrc.K_rcp_H30_DI.Value & "','" & TagSrc.K_rcp_H30_DS.Value & "','" & TagSrc.K_rcp_H30_GEAR_ratio.Value & "','"
+    strSql = strSql & TagSrc.K_rcp_H30_LEAD.Value & "','" & TagSrc.K_rcp_H30_SREF.Value & "','" & TagSrc.K_rcp_HEC_HdDlyT.Value & "','" & TagSrc.K_rcp_HEC_HdRampT.Value & "','" & TagSrc.K_rcp_HEC_TlDlyT.Value & "','" & TagSrc.K_rcp_HEC_TlRampT.Value & "','" & TagSrc.K_rcp_PR1_SREF.Value & "','" & TagSrc.K_rcp_PR1_TRIM.Value & "','" & TagSrc.K_rcp_PR2_SREF.Value & "','" & TagSrc.K_rcp_PR2_TRIM.Value & "','" & TagSrc.K_rcp_PR3_DI.Value & "','" & TagSrc.K_rcp_PR3_GearPos1.Value & "','" & TagSrc.K_rcp_PR3_GearPos2.Value & "','" & TagSrc.K_rcp_PR3_SREF.Value & "','" & TagSrc.K_rcp_PR3_TRIM.Value & "','"
+    strSql = strSql & TagSrc.K_rcp_QuenchT.Value & "','" & TagSrc.K_rcp_Rsh_DivCut.Value & "','" & TagSrc.K_rcp_Rsh_DivTrim.Value & "','" & TagSrc.K_rcp_Rsh_GearPos1.Value & "','" & TagSrc.K_rcp_Rsh_GearPos2.Value & "','" & TagSrc.K_rcp_Rsh_HdCrop.Value & "','" & TagSrc.K_rcp_Rsh_HdCropCycT.Value & "','" & TagSrc.K_rcp_Rsh_HdCropDlyT.Value & "','" & TagSrc.K_rcp_Rsh_HdCut.Value & "','" & TagSrc.K_rcp_Rsh_HdLength.Value & "','" & TagSrc.K_rcp_Rsh_HdTrim.Value & "','" & TagSrc.K_rcp_Rsh_Length.Value & "','" & TagSrc.K_rcp_Rsh_STrim.Value & "','" & TagSrc.K_rcp_Rsh_TlCrop.Value & "','" & TagSrc.K_rcp_Rsh_TlCropCycT.Value & "','"
+    strSql = strSql & TagSrc.K_rcp_Rsh_TlCropDlyT.Value & "','" & TagSrc.K_rcp_Rsh_TlCut.Value & "','" & TagSrc.K_rcp_Rsh_TlLength.Value & "','" & TagSrc.K_rcp_Rsh_TlTrim.Value & "','" & TagSrc.K_rcp_SYS_Bar.Value & "','" & TagSrc.K_rcp_SYS_Coil.Value & "','" & TagSrc.K_rcp_Sys_BarPassST.Value & "','" & TagSrc.K_rcp_Sys_BarPassT.Value & "','" & TagSrc.K_rcp_Sys_LinSP_Perc.Value & "','" & TagSrc.K_rcp_Sys_LinSP_Perc2.Value & "','" & TagSrc.K_rcp_Sys_LinSP_Rate.Value & "','" & TagSrc.K_rcp_bil_SIZE.Value & "','" & TagSrc.K_rcp_mill_CONFIG_1.Value & "','" & TagSrc.K_rcp_mill_CONFIG_2.Value & "','" & TagSrc.K_rcp_mill_CONFIG_3.Value & "','"
+    strSql = strSql & TagSrc.K_rcp_mill_CONFIG_4.Value & "','" & TagSrc.K_rcp_mill_CONFIG_5.Value & "','" & TagSrc.K_rcp_mill_CONFIG_6.Value & "','" & TagSrc.K_rcp_mill_CONFIG_7.Value & "','" & TagSrc.K_rcp_mill_CONFIG_8.Value & "','" & TagSrc.K_rcp_mill_CONFIG_9.Value & "','" & TagSrc.K_rcp_mill_CONFIG_10.Value & "','" & TagSrc.K_rcp_mill_EntrySpeed.Value & "','" & TagSrc.K_rcp_mill_GEAR_ratio.Value & "','" & TagSrc.K_rcp_mill_SPEED.Value & "','" & TagSrc.K_rcp_prod_SIZE.Value & "','" & TagSrc.K_rcp_pshear_head_CROP.Value & "','" & TagSrc.K_rcp_pshear_tail_CROP.Value & "')"
+    cmd.ActiveConnection = cnSrc
+    rsSrc.Open strSql, cnSrc
+   
+    Exit Function
+   
+ErrHandler:
+    MsgBox Err.Description
+   
+End Function
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * *         INSERT ON SAVE        * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * *     Q_Setup      * * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Function QSetupInsert(RcpID As String, cnSrc As ADODB.Connection)
+    Dim strSql As String
+    Dim cmd As New ADODB.Command
+    Dim rsSrc As New ADODB.Recordset
+    Dim AllTags As QSetupGroup
+    Dim TagSrc As QSetupTags
+    On Error GoTo ErrHandler
+ 
+    AllTags = TGroup.LoadQSetupGroup
+    TagSrc = AllTags.DB
+ 
+    strSql = " INSERT INTO Q_Setup VALUES('"
+    strSql = strSql & RcpID & "','" & TagSrc.RcpGrade.Value & "','"
+    strSql = strSql & TagSrc.RO_DBT_MmiSET_1.Value & "','" & TagSrc.RO_DBT_MmiSET_2.Value & "','" & TagSrc.RO_DBT_MmiSET_3.Value & "','" & TagSrc.RO_DBT_MmiSET_4.Value & "','" & TagSrc.RO_DBT_MmiSET_5.Value & "','" & TagSrc.RO_DBT_MmiSET_6.Value & "','" & TagSrc.RO_DBT_MmiSET_7.Value & "','" & TagSrc.RO_DBT_MmiSET_8.Value & "','" & TagSrc.RO_DBT_MmiSET_9.Value & "','" & TagSrc.RO_DBT_MmiSET_10.Value & "','" & TagSrc.RO_DBT_MmiSET_11.Value & "','" & TagSrc.RO_DBT_MmiSET_12.Value & "','" & TagSrc.RO_DBT_MmiSET_13.Value & "','" & TagSrc.RO_DBT_MmiSET_14.Value & "','" & TagSrc.RO_DBT_MmiSET_15.Value & "','"
+    strSql = strSql & TagSrc.RO_DCH_MmiSET_1.Value & "','" & TagSrc.RO_DCH_MmiSET_2.Value & "','" & TagSrc.RO_DCH_MmiSET_3.Value & "','" & TagSrc.RO_DCH_MmiSET_4.Value & "','" & TagSrc.RO_DCH_MmiSET_5.Value & "','" & TagSrc.RO_DCH_MmiSET_6.Value & "','" & TagSrc.RO_DCH_MmiSET_7.Value & "','" & TagSrc.RO_DCH_MmiSET_8.Value & "','" & TagSrc.RO_DCH_MmiSET_9.Value & "','" & TagSrc.RO_DCH_MmiSET_10.Value & "','" & TagSrc.RO_DCH_MmiSET_11.Value & "','" & TagSrc.RO_DCH_MmiSET_12.Value & "','" & TagSrc.RO_DCH_MmiSET_13.Value & "','" & TagSrc.RO_DCH_MmiSET_14.Value & "','" & TagSrc.RO_DCH_MmiSET_15.Value & "','"
+    strSql = strSql & TagSrc.RO_DFR_MmiTRIM_1.Value & "','" & TagSrc.RO_DFR_MmiTRIM_2.Value & "','" & TagSrc.RO_DFR_MmiTRIM_3.Value & "','" & TagSrc.RO_DFR_MmiTRIM_4.Value & "','" & TagSrc.RO_DFR_MmiTRIM_5.Value & "','" & TagSrc.RO_DFR_MmiTRIM_6.Value & "','" & TagSrc.RO_DFR_MmiTRIM_7.Value & "','" & TagSrc.RO_DFR_MmiTRIM_8.Value & "','" & TagSrc.RO_DFR_MmiTRIM_9.Value & "','" & TagSrc.RO_DFR_MmiTRIM_10.Value & "','" & TagSrc.RO_DFR_MmiTRIM_11.Value & "','" & TagSrc.RO_DFR_MmiTRIM_12.Value & "','" & TagSrc.RO_DFR_MmiTRIM_13.Value & "','" & TagSrc.RO_DFR_MmiTRIM_14.Value & "','" & TagSrc.RO_DFR_MmiTRIM_15.Value & "','"
+    strSql = strSql & TagSrc.RO_DPR_MmiSET_1.Value & "','" & TagSrc.RO_DPR_MmiSET_2.Value & "','" & TagSrc.RO_DPR_MmiSET_3.Value & "','" & TagSrc.RO_DPR_MmiSET_4.Value & "','" & TagSrc.RO_DPR_MmiSET_5.Value & "','" & TagSrc.RO_DPR_MmiSET_6.Value & "','" & TagSrc.RO_DPR_MmiSET_7.Value & "','" & TagSrc.RO_DPR_MmiSET_8.Value & "','" & TagSrc.RO_DPR_MmiSET_9.Value & "','" & TagSrc.RO_DPR_MmiSET_10.Value & "','" & TagSrc.RO_DPR_MmiSET_11.Value & "','" & TagSrc.RO_DPR_MmiSET_12.Value & "','" & TagSrc.RO_DPR_MmiSET_13.Value & "','" & TagSrc.RO_DPR_MmiSET_14.Value & "','" & TagSrc.RO_DPR_MmiSET_15.Value & "','"
+    strSql = strSql & TagSrc.RO_DTB_MmiTRIM_1.Value & "','" & TagSrc.RO_DTB_MmiTRIM_2.Value & "','" & TagSrc.RO_DTB_MmiTRIM_3.Value & "','" & TagSrc.RO_DTB_MmiTRIM_4.Value & "','" & TagSrc.RO_DTB_MmiTRIM_5.Value & "','" & TagSrc.RO_DTB_MmiTRIM_6.Value & "','" & TagSrc.RO_DTB_MmiTRIM_7.Value & "','" & TagSrc.RO_DTB_MmiTRIM_8.Value & "','" & TagSrc.RO_DTB_MmiTRIM_9.Value & "','" & TagSrc.RO_DTB_MmiTRIM_10.Value & "','" & TagSrc.RO_DTB_MmiTRIM_11.Value & "','" & TagSrc.RO_DTB_MmiTRIM_12.Value & "','" & TagSrc.RO_DTB_MmiTRIM_13.Value & "','" & TagSrc.RO_DTB_MmiTRIM_14.Value & "','" & TagSrc.RO_DTB_MmiTRIM_15.Value & "','"
+    strSql = strSql & TagSrc.RO_EBT_MmiSET_1.Value & "','" & TagSrc.RO_EBT_MmiSET_2.Value & "','" & TagSrc.RO_EBT_MmiSET_3.Value & "','" & TagSrc.RO_EBT_MmiSET_4.Value & "','" & TagSrc.RO_EBT_MmiSET_5.Value & "','" & TagSrc.RO_EBT_MmiSET_6.Value & "','" & TagSrc.RO_EBT_MmiSET_7.Value & "','" & TagSrc.RO_EBT_MmiSET_8.Value & "','" & TagSrc.RO_EBT_MmiSET_9.Value & "','" & TagSrc.RO_EBT_MmiSET_10.Value & "','" & TagSrc.RO_EBT_MmiSET_11.Value & "','" & TagSrc.RO_EBT_MmiSET_12.Value & "','" & TagSrc.RO_EBT_MmiSET_13.Value & "','" & TagSrc.RO_EBT_MmiSET_14.Value & "','" & TagSrc.RO_EBT_MmiSET_15.Value & "','"
+    strSql = strSql & TagSrc.RO_ECH_MmiSET_1.Value & "','" & TagSrc.RO_ECH_MmiSET_2.Value & "','" & TagSrc.RO_ECH_MmiSET_3.Value & "','" & TagSrc.RO_ECH_MmiSET_4.Value & "','" & TagSrc.RO_ECH_MmiSET_5.Value & "','" & TagSrc.RO_ECH_MmiSET_6.Value & "','" & TagSrc.RO_ECH_MmiSET_7.Value & "','" & TagSrc.RO_ECH_MmiSET_8.Value & "','" & TagSrc.RO_ECH_MmiSET_9.Value & "','" & TagSrc.RO_ECH_MmiSET_10.Value & "','" & TagSrc.RO_ECH_MmiSET_11.Value & "','" & TagSrc.RO_ECH_MmiSET_12.Value & "','" & TagSrc.RO_ECH_MmiSET_13.Value & "','" & TagSrc.RO_ECH_MmiSET_14.Value & "','" & TagSrc.RO_ECH_MmiSET_15.Value & "','"
+    strSql = strSql & TagSrc.RO_EFR_MmiTRIM_1.Value & "','" & TagSrc.RO_EFR_MmiTRIM_2.Value & "','" & TagSrc.RO_EFR_MmiTRIM_3.Value & "','" & TagSrc.RO_EFR_MmiTRIM_4.Value & "','" & TagSrc.RO_EFR_MmiTRIM_5.Value & "','" & TagSrc.RO_EFR_MmiTRIM_6.Value & "','" & TagSrc.RO_EFR_MmiTRIM_7.Value & "','" & TagSrc.RO_EFR_MmiTRIM_8.Value & "','" & TagSrc.RO_EFR_MmiTRIM_9.Value & "','" & TagSrc.RO_EFR_MmiTRIM_10.Value & "','" & TagSrc.RO_EFR_MmiTRIM_11.Value & "','" & TagSrc.RO_EFR_MmiTRIM_12.Value & "','" & TagSrc.RO_EFR_MmiTRIM_13.Value & "','" & TagSrc.RO_EFR_MmiTRIM_14.Value & "','" & TagSrc.RO_EFR_MmiTRIM_15.Value & "','"
+    strSql = strSql & TagSrc.RO_EPR_MmiSET_1.Value & "','" & TagSrc.RO_EPR_MmiSET_2.Value & "','" & TagSrc.RO_EPR_MmiSET_3.Value & "','" & TagSrc.RO_EPR_MmiSET_4.Value & "','" & TagSrc.RO_EPR_MmiSET_5.Value & "','" & TagSrc.RO_EPR_MmiSET_6.Value & "','" & TagSrc.RO_EPR_MmiSET_7.Value & "','" & TagSrc.RO_EPR_MmiSET_8.Value & "','" & TagSrc.RO_EPR_MmiSET_9.Value & "','" & TagSrc.RO_EPR_MmiSET_10.Value & "','" & TagSrc.RO_EPR_MmiSET_11.Value & "','" & TagSrc.RO_EPR_MmiSET_12.Value & "','" & TagSrc.RO_EPR_MmiSET_13.Value & "','" & TagSrc.RO_EPR_MmiSET_14.Value & "','" & TagSrc.RO_EPR_MmiSET_15.Value & "','"
+    strSql = strSql & TagSrc.RO_ETB_MmiTRIM_1.Value & "','" & TagSrc.RO_ETB_MmiTRIM_2.Value & "','" & TagSrc.RO_ETB_MmiTRIM_3.Value & "','" & TagSrc.RO_ETB_MmiTRIM_4.Value & "','" & TagSrc.RO_ETB_MmiTRIM_5.Value & "','" & TagSrc.RO_ETB_MmiTRIM_6.Value & "','" & TagSrc.RO_ETB_MmiTRIM_7.Value & "','" & TagSrc.RO_ETB_MmiTRIM_8.Value & "','" & TagSrc.RO_ETB_MmiTRIM_9.Value & "','" & TagSrc.RO_ETB_MmiTRIM_10.Value & "','" & TagSrc.RO_ETB_MmiTRIM_11.Value & "','" & TagSrc.RO_ETB_MmiTRIM_12.Value & "','" & TagSrc.RO_ETB_MmiTRIM_13.Value & "','" & TagSrc.RO_ETB_MmiTRIM_14.Value & "','" & TagSrc.RO_ETB_MmiTRIM_15.Value & "','"
+    strSql = strSql & TagSrc.RO_RGH_MmiENSPD_1.Value & "','" & TagSrc.RO_RGH_MmiENSPD_2.Value & "','" & TagSrc.RO_RGH_MmiENSPD_3.Value & "','" & TagSrc.RO_RGH_MmiENSPD_4.Value & "','" & TagSrc.RO_RGH_MmiENSPD_5.Value & "','" & TagSrc.RO_RGH_MmiENSPD_6.Value & "','" & TagSrc.RO_RGH_MmiENSPD_7.Value & "','" & TagSrc.RO_RGH_MmiENSPD_8.Value & "','" & TagSrc.RO_RGH_MmiENSPD_9.Value & "','" & TagSrc.RO_RGH_MmiENSPD_10.Value & "','" & TagSrc.RO_RGH_MmiENSPD_11.Value & "','" & TagSrc.RO_RGH_MmiENSPD_12.Value & "','" & TagSrc.RO_RGH_MmiENSPD_13.Value & "','" & TagSrc.RO_RGH_MmiENSPD_14.Value & "','" & TagSrc.RO_RGH_MmiENSPD_15.Value & "','"
+    strSql = strSql & TagSrc.RO_RGH_MmiEXSPD_1.Value & "','" & TagSrc.RO_RGH_MmiEXSPD_2.Value & "','" & TagSrc.RO_RGH_MmiEXSPD_3.Value & "','" & TagSrc.RO_RGH_MmiEXSPD_4.Value & "','" & TagSrc.RO_RGH_MmiEXSPD_5.Value & "','" & TagSrc.RO_RGH_MmiEXSPD_6.Value & "','" & TagSrc.RO_RGH_MmiEXSPD_7.Value & "','" & TagSrc.RO_RGH_MmiEXSPD_8.Value & "','" & TagSrc.RO_RGH_MmiEXSPD_9.Value & "','" & TagSrc.RO_RGH_MmiEXSPD_10.Value & "','" & TagSrc.RO_RGH_MmiEXSPD_11.Value & "','" & TagSrc.RO_RGH_MmiEXSPD_12.Value & "','" & TagSrc.RO_RGH_MmiEXSPD_13.Value & "','" & TagSrc.RO_RGH_MmiEXSPD_14.Value & "','" & TagSrc.RO_RGH_MmiEXSPD_15.Value & "','"
+    strSql = strSql & TagSrc.RO_RGH_MmiRSPD_1.Value & "','" & TagSrc.RO_RGH_MmiRSPD_2.Value & "','" & TagSrc.RO_RGH_MmiRSPD_3.Value & "','" & TagSrc.RO_RGH_MmiRSPD_4.Value & "','" & TagSrc.RO_RGH_MmiRSPD_5.Value & "','" & TagSrc.RO_RGH_MmiRSPD_6.Value & "','" & TagSrc.RO_RGH_MmiRSPD_7.Value & "','" & TagSrc.RO_RGH_MmiRSPD_8.Value & "','" & TagSrc.RO_RGH_MmiRSPD_9.Value & "','" & TagSrc.RO_RGH_MmiRSPD_10.Value & "','" & TagSrc.RO_RGH_MmiRSPD_11.Value & "','" & TagSrc.RO_RGH_MmiRSPD_12.Value & "','" & TagSrc.RO_RGH_MmiRSPD_13.Value & "','" & TagSrc.RO_RGH_MmiRSPD_14.Value & "','" & TagSrc.RO_RGH_MmiRSPD_15.Value & "','"
+    strSql = strSql & TagSrc.RO_SCR_MmiGAP_1.Value & "','" & TagSrc.RO_SCR_MmiGAP_2.Value & "','" & TagSrc.RO_SCR_MmiGAP_3.Value & "','" & TagSrc.RO_SCR_MmiGAP_4.Value & "','" & TagSrc.RO_SCR_MmiGAP_5.Value & "','" & TagSrc.RO_SCR_MmiGAP_6.Value & "','" & TagSrc.RO_SCR_MmiGAP_7.Value & "','" & TagSrc.RO_SCR_MmiGAP_8.Value & "','" & TagSrc.RO_SCR_MmiGAP_9.Value & "','" & TagSrc.RO_SCR_MmiGAP_10.Value & "','" & TagSrc.RO_SCR_MmiGAP_11.Value & "','" & TagSrc.RO_SCR_MmiGAP_12.Value & "','" & TagSrc.RO_SCR_MmiGAP_13.Value & "','" & TagSrc.RO_SCR_MmiGAP_14.Value & "','" & TagSrc.RO_SCR_MmiGAP_15.Value & "','"
+    strSql = strSql & TagSrc.RO_SYS_MmiGRV_1.Value & "','" & TagSrc.RO_SYS_MmiGRV_2.Value & "','" & TagSrc.RO_SYS_MmiGRV_3.Value & "','" & TagSrc.RO_SYS_MmiGRV_4.Value & "','" & TagSrc.RO_SYS_MmiGRV_5.Value & "','" & TagSrc.RO_SYS_MmiGRV_6.Value & "','" & TagSrc.RO_SYS_MmiGRV_7.Value & "','" & TagSrc.RO_SYS_MmiGRV_8.Value & "','" & TagSrc.RO_SYS_MmiGRV_9.Value & "','" & TagSrc.RO_SYS_MmiGRV_10.Value & "','" & TagSrc.RO_SYS_MmiGRV_11.Value & "','" & TagSrc.RO_SYS_MmiGRV_12.Value & "','" & TagSrc.RO_SYS_MmiGRV_13.Value & "','" & TagSrc.RO_SYS_MmiGRV_14.Value & "','" & TagSrc.RO_SYS_MmiGRV_15.Value & "','"
+    strSql = strSql & TagSrc.RO_SYS_MmiPassIND_1.Value & "','" & TagSrc.RO_SYS_MmiPassIND_2.Value & "','" & TagSrc.RO_SYS_MmiPassIND_3.Value & "','" & TagSrc.RO_SYS_MmiPassIND_4.Value & "','" & TagSrc.RO_SYS_MmiPassIND_5.Value & "','" & TagSrc.RO_SYS_MmiPassIND_6.Value & "','" & TagSrc.RO_SYS_MmiPassIND_7.Value & "','" & TagSrc.RO_SYS_MmiPassIND_8.Value & "','" & TagSrc.RO_SYS_MmiPassIND_9.Value & "','" & TagSrc.RO_SYS_MmiPassIND_10.Value & "','" & TagSrc.RO_SYS_MmiPassIND_11.Value & "','" & TagSrc.RO_SYS_MmiPassIND_12.Value & "','" & TagSrc.RO_SYS_MmiPassIND_13.Value & "','" & TagSrc.RO_SYS_MmiPassIND_14.Value & "','" & TagSrc.RO_SYS_MmiPassIND_15.Value & "','" & TagSrc.RI_SYS_RcpLastPass.Value & "')"
+    cmd.ActiveConnection = cnSrc
+    rsSrc.Open strSql, cnSrc
+   
+    Exit Function
+   
+ErrHandler:
+    MsgBox Err.Description
+   
+End Function
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * *         INSERT ON SAVE        * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * *       Q_Prod      * * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Function QProdInsert(RcpID As String, cnSrc As ADODB.Connection)
+    Dim strSql As String
+    Dim cmd As New ADODB.Command
+    Dim rsSrc As New ADODB.Recordset
+    Dim AllTags As QProdGroup
+    Dim TagSrc As QProdTags
+    On Error GoTo ErrHandler
+ 
+    AllTags = TGroup.LoadQProdGroup
+    TagSrc = AllTags.DB
+   
+ 
+    strSql = " INSERT INTO Q_Prod VALUES('"
+    strSql = strSql & RcpID & "','" & TagSrc.RcpGrade.Value & "','"
+    strSql = strSql & TagSrc.Q_prdct_HEAT.Value & "','" & TagSrc.Q_prdct_MO.Value & "','" & TagSrc.Q_prdct_COIL.Value & "','" & TagSrc.Q_prdct_COILSn.Value & "','" & TagSrc.Q_prdct_SIZE.Value & "','" & TagSrc.Q_prdct_SPARE1.Value & "','" & TagSrc.Q_prdct_SPARE2.Value & "','" & TagSrc.Q_prdct_SPARE3.Value & "','" & TagSrc.Q_prdct_bil_DROP_count.Value & "','" & TagSrc.Q_prdct_bil_QUANT.Value & "','" & TagSrc.Q_prdct_bil_ROLLED.Value & "','" & TagSrc.Q_prdct_bil_SCHED.Value & "','" & TagSrc.Q_prdct_bil_SIZE.Value & "','" & TagSrc.Q_prdct_bil_WEIGHT.Value & "')"
+    cmd.ActiveConnection = cnSrc
+    rsSrc.Open strSql, cnSrc
+   
+    Exit Function
+   
+ErrHandler:
+    MsgBox Err.Description
+ 
+End Function
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * *       UPDATE ON SAVE        * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * *     Master        * * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Function MasterUpdate(RcpID As String, cnSrc As ADODB.Connection)
+    Dim strSql As String
+    Dim cmd As New ADODB.Command
+    Dim rsSrc As New ADODB.Recordset
+    Dim TagSrc As MasterTags
+    Dim DateValue As String
+    On Error GoTo ErrHandler
+   
+    ' Records the current date and time when an update is made
+    DateValue = Format(Date, "mmm d yyyy") & " " & Format(Time, "h:mm AM/PM")
+ 
+    ' Loads all the tags for the Master table
+    TagSrc = TGroup.LoadMasterTags
+   
+    'Updates all the coloumns in the table with the corresponding recipe ID
+    strSql = "UPDATE [master] SET" & _
+    "[RcpGrade] = '" & TagSrc.RcpGrade.Value & "',[RcpFinish]= '" & TagSrc.RcpFinish.Value & "',[RcpRough]= '" & TagSrc.RcpRough.Value & "',[RcpDsc] = '" & TagSrc.RcpDsc.Value & "',[RCPDate] = '" & DateValue & "' " & _
+    "WHERE RcpID = '" & RcpID & "'"
+    cmd.ActiveConnection = cnSrc
+    rsSrc.Open strSql, cnSrc
+   
+    Exit Function
+   
+ErrHandler:
+    MsgBox Err.Description
+ 
+End Function
+ 
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * *         UPDATE ON SAVE        * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * *     Inducto_B       * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Function UpdateInductoB(RcpID As String, cnSrc As ADODB.Connection)
+    Dim strSql As String
+    Dim cmd As New ADODB.Command
+    Dim rsSrc As New ADODB.Recordset
+    Dim AllTags As InductoBGroup
+    Dim TagSrc As InductoBTags
+    On Error GoTo ErrHandler
+   
+    AllTags = TGroup.LoadInductoBGroup
+    TagSrc = AllTags.DB
+   
+    strSql = "UPDATE [inducto_b] SET" & _
+    "[RcpGrade] = '" & TagSrc.RcpGrade.Value & "',[K_indb_MINTEMP] = '" & TagSrc.K_indb_MINTEMP.Value & "',[K_indb_TEMP] = '" & TagSrc.K_indb_TEMP.Value & "',[K_rcp_bil_SIZE] = '" & TagSrc.K_rcp_bil_SIZE.Value & "', " & _
+    "[STD_CylConstantActual_RCP_RO_1] = '" & TagSrc.STD_CylConstantActual_RCP_RO_1.Value & "',[STD_CylConstantActual_RCP_RO_2] = '" & TagSrc.STD_CylConstantActual_RCP_RO_2.Value & "',[STD_CylConstantActual_RCP_RO_3] = '" & TagSrc.STD_CylConstantActual_RCP_RO_3.Value & "',[STD_CylConstantActual_RCP_RO_4] = '" & TagSrc.STD_CylConstantActual_RCP_RO_4.Value & "',[STD_CylConstantActual_RCP_RO_5] = '" & TagSrc.STD_CylConstantActual_RCP_RO_5.Value & "',[STD_CylConstantActual_RCP_RO_6] = '" & TagSrc.STD_CylConstantActual_RCP_RO_6.Value & "',[STD_CylConstantActual_RCP_RO_7] = '" & TagSrc.STD_CylConstantActual_RCP_RO_7.Value & "',[STD_CylConstantActual_RCP_RO_8] = '" & TagSrc.STD_CylConstantActual_RCP_RO_8.Value & "',[STD_CylConstantActual_RCP_RO_9] = '" & TagSrc.STD_CylConstantActual_RCP_RO_9.Value & "',[STD_CylConstantActual_RCP_RO_10] = '" & TagSrc.STD_CylConstantActual_RCP_RO_10.Value & "',[STD_CylConstant_RCP_RI_1] = '" & TagSrc.STD_CylConstant_RCP_RI_1.Value & "', " & _
+    "[STD_CylConstant_RCP_RI_2] = '" & TagSrc.STD_CylConstant_RCP_RI_2.Value & "',[STD_CylConstant_RCP_RI_3] = '" & TagSrc.STD_CylConstant_RCP_RI_3.Value & "',[STD_CylConstant_RCP_RI_4] = '" & TagSrc.STD_CylConstant_RCP_RI_4.Value & "',[STD_CylConstant_RCP_RI_6] = '" & TagSrc.STD_CylConstant_RCP_RI_6.Value & "',[STD_CylConstant_RCP_RI_7] = '" & TagSrc.STD_CylConstant_RCP_RI_7.Value & "',[STD_CylConstant_RCP_RI_8] = '" & TagSrc.STD_CylConstant_RCP_RI_8.Value & "', [STD_CylConstant_RCP_RI_9] = '" & TagSrc.STD_CylConstant_RCP_RI_9.Value & "',[STD_CylConstant_RCP_RI_10] = '" & TagSrc.STD_CylConstant_RCP_RI_10.Value & "',[indB_STD_SpareInt_RCP_RI_1] = '" & TagSrc.STD_SpareInt_RCP_RI_1.Value & "',[indB_STD_SpareInt_RCP_RI_2] = '" & TagSrc.STD_SpareInt_RCP_RI_2.Value & "' " & _
+    "WHERE RcpID = '" & RcpID & "'"
+    cmd.ActiveConnection = cnSrc
+    rsSrc.Open strSql, cnSrc
+   
+    Exit Function
+   
+ErrHandler:
+    MsgBox Err.Description
+ 
+End Function
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * *         UPDATE ON SAVE        * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * *     Inducto_A       * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Function UpdateInductoA(RcpID As String, cnSrc As ADODB.Connection)
+Dim strSql As String
+Dim cmd As New ADODB.Command
+Dim rsSrc As New ADODB.Recordset
+Dim AllTags As InductoAGroup
+Dim TagSrc As InductoATags
+On Error GoTo ErrHandler
+ 
+    AllTags = TGroup.LoadInductoAGroup
+    TagSrc = AllTags.DB
+ 
+    strSql = "UPDATE [inducto_a] SET" & _
+    "[Q_inda_EXRATE] = '" & TagSrc.Q_inda_EXRATE.Value & "',[RcpGrade] = '" & TagSrc.RcpGrade.Value & "',[Q_inda_MINTEMP] = '" & TagSrc.Q_inda_MINTEMP.Value & "',[Q_inda_RATE] = '" & TagSrc.Q_inda_RATE.Value & "',[Q_inda_RBARS] = '" & TagSrc.Q_inda_RBARS.Value & "',[Q_inda_SQBARS] = '" & TagSrc.Q_inda_SQBARS.Value & "',[Q_inda_TEMP] = '" & TagSrc.Q_inda_TEMP.Value & "',[Q_inda_bil_SIZE] = '" & TagSrc.Q_inda_bil_SIZE.Value & "',[RI_DCH_RcpSET_1] = '" & TagSrc.RI_DCH_RcpSET_1.Value & "',[RI_DCH_RcpSET_2] = '" & TagSrc.RI_DCH_RcpSET_2.Value & "', " & _
+    "[RI_DCH_RcpSET_3] = '" & TagSrc.RI_DCH_RcpSET_3.Value & "',[RI_DCH_RcpSET_4] = '" & TagSrc.RI_DCH_RcpSET_4.Value & "',[RI_DCH_RcpSET_5] = '" & TagSrc.RI_DCH_RcpSET_5.Value & "', [RI_DCH_RcpSET_6] = '" & TagSrc.RI_DCH_RcpSET_6.Value & "',[RI_DCH_RcpSET_7] = '" & TagSrc.RI_DCH_RcpSET_7.Value & "', [RI_DCH_RcpSET_8] = '" & TagSrc.RI_DCH_RcpSET_8.Value & "',[RI_DCH_RcpSET_9] = '" & TagSrc.RI_DCH_RcpSET_9.Value & "',[RI_DCH_RcpSET_10] = '" & TagSrc.RI_DCH_RcpSET_10.Value & "',[RI_DCH_RcpSET_11] = '" & TagSrc.RI_DCH_RcpSET_11.Value & "',[RI_DCH_RcpSET_12] = '" & TagSrc.RI_DCH_RcpSET_12.Value & "', " & _
+    "[RI_DCH_RcpSET_13] = '" & TagSrc.RI_DCH_RcpSET_13.Value & "',[RI_DCH_RcpSET_14] = '" & TagSrc.RI_DCH_RcpSET_14.Value & "',[RI_DCH_RcpSET_15] = '" & TagSrc.RI_DCH_RcpSET_15.Value & "',[RI_ECH_RcpSET_1] = '" & TagSrc.RI_ECH_RcpSET_1.Value & "',[RI_ECH_RcpSET_2] = '" & TagSrc.RI_ECH_RcpSET_2.Value & "',[RI_ECH_RcpSET_3] = '" & TagSrc.RI_ECH_RcpSET_3.Value & "',[RI_ECH_RcpSET_4] = '" & TagSrc.RI_ECH_RcpSET_4.Value & "',[RI_ECH_RcpSET_5] = '" & TagSrc.RI_ECH_RcpSET_5.Value & "',[RI_ECH_RcpSET_6] = '" & TagSrc.RI_ECH_RcpSET_6.Value & "',[RI_ECH_RcpSET_7] = '" & TagSrc.RI_ECH_RcpSET_7.Value & "', " & _
+    "[RI_ECH_RcpSET_8] = '" & TagSrc.RI_ECH_RcpSET_8.Value & "',[RI_ECH_RcpSET_9] = '" & TagSrc.RI_ECH_RcpSET_9.Value & "',[RI_ECH_RcpSET_10] = '" & TagSrc.RI_ECH_RcpSET_10.Value & "',[RI_ECH_RcpSET_11] = '" & TagSrc.RI_ECH_RcpSET_11.Value & "',[RI_ECH_RcpSET_12] = '" & TagSrc.RI_ECH_RcpSET_12.Value & "',[RI_ECH_RcpSET_13] = '" & TagSrc.RI_ECH_RcpSET_13.Value & "',[RI_ECH_RcpSET_14] = '" & TagSrc.RI_ECH_RcpSET_14.Value & "',[RI_ECH_RcpSET_15] = '" & TagSrc.RI_ECH_RcpSET_15.Value & "' " & _
+    "WHERE RcpID = '" & RcpID & "'"
+    cmd.ActiveConnection = cnSrc
+    rsSrc.Open strSql, cnSrc
+   
+    Exit Function
+   
+ErrHandler:
+    MsgBox Err.Description
+ 
+End Function
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * *         UPDATE ON SAVE        * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * *     Kocks_Setup       * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Function UpdateKocksSetup(RcpID As String, cnSrc As ADODB.Connection)
+Dim strSql As String
+Dim cmd As New ADODB.Command
+Dim rsSrc As New ADODB.Recordset
+Dim AllTags As KocksSetupGroup
+Dim TagSrc As KocksSetupTags
+On Error GoTo ErrHandler
+ 
+    AllTags = TGroup.LoadKocksSetupGroup
+    TagSrc = AllTags.DB
+ 
+    strSql = "UPDATE [kocks_setup] SET" & _
+    "[RcpGrade] = " & TagSrc.RcpGrade.Value & ",[K_rcp_COIL_AMP] = '" & TagSrc.K_rcp_COIL_AMP.Value & "',[K_rcp_COIL_FREQ] = '" & TagSrc.K_rcp_COIL_FREQ.Value & "',[K_rcp_COIL_SREF] = '" & TagSrc.K_rcp_COIL_SREF.Value & "',[K_rcp_COIL_TRIM] = " & TagSrc.K_rcp_COIL_TRIM.Value & ",[K_rcp_COIL_WOBBLE] = " & TagSrc.K_rcp_COIL_WOBBLE.Value & ",[K_rcp_CONV_SREF] = " & TagSrc.K_rcp_CONV_SREF.Value & ",[K_rcp_CONV_TRIM] = " & TagSrc.K_rcp_CONV_TRIM.Value & ",[K_rcp_EPR_SREF] = " & TagSrc.K_rcp_EPR_SREF.Value & ",[K_rcp_EPR_Trim] = " & TagSrc.K_rcp_EPR_Trim.Value & ", " & _
+    "[K_rcp_H10_AQ] = '" & TagSrc.K_rcp_H10_AQ.Value & "',[K_rcp_H10_DI] = '" & TagSrc.K_rcp_H10_DI.Value & "',[K_rcp_H10_DS] = '" & TagSrc.K_rcp_H10_DS.Value & "',[K_rcp_H10_GEAR_ratio] = '" & TagSrc.K_rcp_H10_GEAR_ratio.Value & "',[K_rcp_H10_LEAD] = '" & TagSrc.K_rcp_H10_LEAD.Value & "',[K_rcp_H10_SREF] = '" & TagSrc.K_rcp_H10_SREF.Value & "',[K_rcp_H10_headSREF] = '" & TagSrc.K_rcp_H10_headSREF.Value & "',[K_rcp_H10_tailSREF] = '" & TagSrc.K_rcp_H10_tailSREF.Value & "',[K_rcp_H20_AQ] = '" & TagSrc.K_rcp_H20_AQ.Value & "',[K_rcp_H20_DI] = '" & TagSrc.K_rcp_H20_DI.Value & "', " & _
+    "[K_rcp_H20_DS] = '" & TagSrc.K_rcp_H20_DS.Value & "',[K_rcp_H20_GEAR_ratio] = '" & TagSrc.K_rcp_H20_GEAR_ratio.Value & "',[K_rcp_H20_LEAD] = '" & TagSrc.K_rcp_H20_LEAD.Value & "', [K_rcp_H20_SREF] = '" & TagSrc.K_rcp_H20_SREF.Value & "',[K_rcp_H20_headSREF] = '" & TagSrc.K_rcp_H20_headSREF.Value & "',[K_rcp_H20_tailSREF] = '" & TagSrc.K_rcp_H20_tailSREF.Value & "',[K_rcp_H30_AQ] = '" & TagSrc.K_rcp_H30_AQ.Value & "',[K_rcp_H30_DI] = '" & TagSrc.K_rcp_H30_DI.Value & "',[K_rcp_H30_DS] = '" & TagSrc.K_rcp_H30_DS.Value & "',[K_rcp_H30_GEAR_ratio] = '" & TagSrc.K_rcp_H30_GEAR_ratio.Value & "', " & _
+    "[K_rcp_H30_LEAD] = '" & TagSrc.K_rcp_H30_LEAD.Value & "',[K_rcp_H30_SREF] = '" & TagSrc.K_rcp_H30_SREF.Value & "',[K_rcp_HEC_HdDlyT] = '" & TagSrc.K_rcp_HEC_HdDlyT.Value & "',[K_rcp_HEC_HdRampT] = '" & TagSrc.K_rcp_HEC_HdRampT.Value & "',[K_rcp_HEC_TlDlyT] = '" & TagSrc.K_rcp_HEC_TlDlyT.Value & "',[K_rcp_HEC_TlRampT] = '" & TagSrc.K_rcp_HEC_TlRampT.Value & "',[K_rcp_PR1_SREF] = '" & TagSrc.K_rcp_PR1_SREF.Value & "',[K_rcp_PR1_TRIM] = '" & TagSrc.K_rcp_PR1_TRIM.Value & "',[K_rcp_PR2_SREF] = '" & TagSrc.K_rcp_PR2_SREF.Value & "',[K_rcp_PR2_TRIM] = '" & TagSrc.K_rcp_PR2_TRIM.Value & "', " & _
+    "[K_rcp_PR3_DI] = '" & TagSrc.K_rcp_PR3_DI.Value & "',[K_rcp_PR3_GearPos1] = '" & TagSrc.K_rcp_PR3_GearPos1.Value & "',[K_rcp_PR3_GearPos2] = '" & TagSrc.K_rcp_PR3_GearPos2.Value & "',[K_rcp_PR3_SREF] = '" & TagSrc.K_rcp_PR3_SREF.Value & "',[K_rcp_PR3_TRIM] = '" & TagSrc.K_rcp_PR3_TRIM.Value & "',[K_rcp_QuenchT] = '" & TagSrc.K_rcp_QuenchT.Value & "', [K_rcp_Rsh_DivCut] = '" & TagSrc.K_rcp_Rsh_DivCut.Value & "',[K_rcp_Rsh_DivTrim] = '" & TagSrc.K_rcp_Rsh_DivTrim.Value & "', [K_rcp_Rsh_GearPos1] = '" & TagSrc.K_rcp_Rsh_GearPos1.Value & "',[K_rcp_Rsh_GearPos2] = '" & TagSrc.K_rcp_Rsh_GearPos2.Value & "', " & _
+    "[K_rcp_Rsh_HdCrop] = " & TagSrc.K_rcp_Rsh_HdCrop.Value & ",[K_rcp_Rsh_HdCropCycT] = '" & TagSrc.K_rcp_Rsh_HdCropCycT.Value & "',[K_rcp_Rsh_HdCropDlyT] = '" & TagSrc.K_rcp_Rsh_HdCropDlyT.Value & "',[K_rcp_Rsh_HdCut] = " & TagSrc.K_rcp_Rsh_HdCut.Value & ",[K_rcp_Rsh_HdLength] = " & TagSrc.K_rcp_Rsh_HdLength.Value & ",[K_rcp_Rsh_HdTrim] = '" & TagSrc.K_rcp_Rsh_HdTrim.Value & "',[K_rcp_Rsh_Length] = '" & TagSrc.K_rcp_Rsh_Length.Value & "',[K_rcp_Rsh_STrim] = '" & TagSrc.K_rcp_Rsh_STrim.Value & "',[K_rcp_Rsh_TlCrop] = " & TagSrc.K_rcp_Rsh_TlCrop.Value & ",[K_rcp_Rsh_TlCropCycT] = '" & TagSrc.K_rcp_Rsh_TlCropCycT.Value & "', " & _
+    "[K_rcp_Rsh_TlCropDlyT] = '" & TagSrc.K_rcp_Rsh_TlCropDlyT.Value & "',[K_rcp_Rsh_TlCut] = '" & TagSrc.K_rcp_Rsh_TlCut.Value & "',[K_rcp_Rsh_TlLength] = '" & TagSrc.K_rcp_Rsh_TlLength.Value & "',[K_rcp_Rsh_TlTrim] = '" & TagSrc.K_rcp_Rsh_TlTrim.Value & "',[K_rcp_SYS_Bar] = '" & TagSrc.K_rcp_SYS_Bar.Value & "',[K_rcp_SYS_Coil] = '" & TagSrc.K_rcp_SYS_Coil.Value & "',[K_rcp_Sys_BarPassST] = '" & TagSrc.K_rcp_Sys_BarPassST.Value & "',[K_rcp_Sys_BarPassT] = '" & TagSrc.K_rcp_Sys_BarPassT.Value & "',[K_rcp_Sys_LinSP_Perc] = '" & TagSrc.K_rcp_Sys_LinSP_Perc.Value & "',[K_rcp_Sys_LinSP_Perc2] = '" & TagSrc.K_rcp_Sys_LinSP_Perc2.Value & "', " & _
+    "[K_rcp_Sys_LinSP_Rate] = '" & TagSrc.K_rcp_Sys_LinSP_Rate.Value & "',[K_rcp_bil_SIZE] = '" & TagSrc.K_rcp_bil_SIZE.Value & "',[K_rcp_mill_CONFIG_1] = '" & TagSrc.K_rcp_mill_CONFIG_1.Value & "',[K_rcp_mill_CONFIG_2] = '" & TagSrc.K_rcp_mill_CONFIG_2.Value & "',[K_rcp_mill_CONFIG_3] = '" & TagSrc.K_rcp_mill_CONFIG_3.Value & "',[K_rcp_mill_CONFIG_4] = '" & TagSrc.K_rcp_mill_CONFIG_4.Value & "', [K_rcp_mill_CONFIG_5] = '" & TagSrc.K_rcp_mill_CONFIG_5.Value & "', [K_rcp_mill_CONFIG_6] = '" & TagSrc.K_rcp_mill_CONFIG_6.Value & "',[K_rcp_mill_CONFIG_7] = '" & TagSrc.K_rcp_mill_CONFIG_7.Value & "',[K_rcp_mill_CONFIG_8] = '" & TagSrc.K_rcp_mill_CONFIG_8.Value & "', " & _
+    "[K_rcp_mill_CONFIG_9] = '" & TagSrc.K_rcp_mill_CONFIG_9.Value & "',[K_rcp_mill_CONFIG_10] = '" & TagSrc.K_rcp_mill_CONFIG_10.Value & "',[K_rcp_mill_EntrySpeed] = '" & TagSrc.K_rcp_mill_EntrySpeed.Value & "',[K_rcp_mill_GEAR_ratio] = '" & TagSrc.K_rcp_mill_GEAR_ratio.Value & "',[K_rcp_mill_SPEED] = '" & TagSrc.K_rcp_mill_SPEED.Value & "',[K_rcp_prod_SIZE] = '" & TagSrc.K_rcp_prod_SIZE.Value & "',[K_rcp_pshear_head_CROP] = '" & TagSrc.K_rcp_pshear_head_CROP.Value & "',[K_rcp_pshear_tail_CROP] = '" & TagSrc.K_rcp_pshear_tail_CROP.Value & "' " & _
+    "WHERE RcpID = '" & RcpID & "'"
+    cmd.ActiveConnection = cnSrc
+ 
+    Exit Function
+   
+ErrHandler:
+    MsgBox Err.Description
+ 
+End Function
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * *         UPDATE ON SAVE        * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * * *     K2_Setup      * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Function UpdateK2Setup(RcpID As String, cnSrc As ADODB.Connection)
+Dim strSql As String
+Dim cmd As New ADODB.Command
+Dim rsSrc As New ADODB.Recordset
+Dim AllTags As K2SetupGroup
+Dim TagSrc As K2SetupTags
+On Error GoTo ErrHandler
+ 
+    AllTags = TGroup.LoadK2SetupGroup
+    TagSrc = AllTags.DB
+   
+    strSql = "UPDATE [k2_setup] SET" & _
+    "[RcpGrade] = '" & TagSrc.RcpGrade.Value & "',[GEN_K2_ProdSchNo_RCP_RO] = '" & TagSrc.GEN_K2_ProdSchNo_RCP_RO.Value & "',[GEN_K2_FinishSpeed_RCP_RI] = '" & TagSrc.GEN_K2_FinishSpeed_RCP_RI.Value & "',[GEN_K2_EntrySpeed_RCP_RI] = '" & TagSrc.GEN_K2_EntrySpeed_RCP_RI.Value & "',[GEN_K2_FinishingStand_RCP_RI] = '" & TagSrc.GEN_K2_FinishingStand_RCP_RI.Value & "',[GEN_K2_BilletSizeHot_RCP_RI] = '" & TagSrc.GEN_K2_BilletSizeHot_RCP_RI.Value & "',[GEN_K2_BilletAreaHot_RCP_RI] = '" & TagSrc.GEN_K2_BilletAreaHot_RCP_RI.Value & "',[GEN_K2_ProdSizeHot_RCP_RI] = '" & TagSrc.GEN_K2_ProdSizeHot_RCP_RI.Value & "',[GEN_K2_ProdSizeCold_RCP_RI] = '" & TagSrc.GEN_K2_ProdSizeCold_RCP_RI.Value & "',[GEN_K2_ProdAreaCold_RCP_RI] = '" & TagSrc.GEN_K2_ProdAreaCold_RCP_RI.Value & "',[GEN_K2_KFO_RCP_RI] = '" & TagSrc.GEN_K2_KFO_RCP_RI.Value & "',[GEN_K2_ShrinkFactor_RCP_RI] = '" & TagSrc.GEN_K2_ShrinkFactor_RCP_RI.Value & "',[GEN_K2_BilletEntryTemp_RCP_RI] = '" & TagSrc.GEN_K2_BilletEntryTemp_RCP_RI.Value & "'," & _
+    "[GEN_K2_BlockID_RCP_RI] = '" & TagSrc.GEN_K2_BlockID_RCP_RI.Value & "',[GEN_K2_ContThrghPut_RCP_RI] = '" & TagSrc.GEN_K2_ContThrghPut_RCP_RI.Value & "',[GEN_K2_CurProdInCycle_RCP_RI] = '" & TagSrc.GEN_K2_CurProdInCycle_RCP_RI.Value & "',[GEN_K2_NxtProdInCycle_RCP_RI] = '" & TagSrc.GEN_K2_NxtProdInCycle_RCP_RI.Value & "',[K2_TEN_Tf_RCP_RI] = '" & TagSrc.K2_TEN_Tf_RCP_RI.Value & "',[K2_TEN_TfActual_RCP_RO] = '" & TagSrc.K2_TEN_TfActual_RCP_RO.Value & "',[K2_TEN_SpareReal_RCP_RI] = '" & TagSrc.K2_TEN_SpareReal_RCP_RI.Value & "',[STD_PassNumber_RCP_RI_1] = '" & TagSrc.STD_PassNumber_RCP_RI_1.Value & "',[STD_PassNumber_RCP_RI_2] = '" & TagSrc.STD_PassNumber_RCP_RI_2.Value & "',[STD_PassNumber_RCP_RI_3] = '" & TagSrc.STD_PassNumber_RCP_RI_3.Value & "',[STD_PassNumber_RCP_RI_4] = '" & TagSrc.STD_PassNumber_RCP_RI_4.Value & "',[STD_PassNumber_RCP_RI_5] = '" & TagSrc.STD_PassNumber_RCP_RI_5.Value & "',[STD_PassNumber_RCP_RI_6] = '" & TagSrc.STD_PassNumber_RCP_RI_6.Value & "'," & _
+    "[STD_PassNumber_RCP_RI_7] = '" & TagSrc.STD_PassNumber_RCP_RI_7.Value & "',[STD_PassNumber_RCP_RI_8] = '" & TagSrc.STD_PassNumber_RCP_RI_8.Value & "',[STD_PassNumber_RCP_RI_9] = '" & TagSrc.STD_PassNumber_RCP_RI_9.Value & "',[STD_PassNumber_RCP_RI_10] = '" & TagSrc.STD_PassNumber_RCP_RI_10.Value & "',[STD_Config_RCP_RI_1] = '" & TagSrc.STD_Config_RCP_RI_1.Value & "',[STD_Config_RCP_RI_2] = '" & TagSrc.STD_Config_RCP_RI_2.Value & "',[STD_Config_RCP_RI_3] = '" & TagSrc.STD_Config_RCP_RI_3.Value & "',[STD_Config_RCP_RI_4] = '" & TagSrc.STD_Config_RCP_RI_4.Value & "',[STD_Config_RCP_RI_5] = '" & TagSrc.STD_Config_RCP_RI_5.Value & "',[STD_Config_RCP_RI_6] = '" & TagSrc.STD_Config_RCP_RI_6.Value & "',[STD_Config_RCP_RI_7] = '" & TagSrc.STD_Config_RCP_RI_7.Value & "',[STD_Config_RCP_RI_8] = '" & TagSrc.STD_Config_RCP_RI_8.Value & "',[STD_Config_RCP_RI_9] = '" & TagSrc.STD_Config_RCP_RI_9.Value & "',[STD_Config_RCP_RI_10] = '" & TagSrc.STD_Config_RCP_RI_10.Value & "'," & _
+    "[STD_Config_RCP_RI_0] = '" & TagSrc.STD_Config_RCP_RI_0.Value & "',[STD_Mode_RCP_RI_1] = '" & TagSrc.STD_Mode_RCP_RI_1.Value & "',[STD_Mode_RCP_RI_2] = '" & TagSrc.STD_Mode_RCP_RI_2.Value & "',[STD_Mode_RCP_RI_3] = '" & TagSrc.STD_Mode_RCP_RI_3.Value & "',[STD_Mode_RCP_RI_4] = '" & TagSrc.STD_Mode_RCP_RI_4.Value & "',[STD_Mode_RCP_RI_5] = '" & TagSrc.STD_Mode_RCP_RI_5.Value & "',[STD_Mode_RCP_RI_6] = '" & TagSrc.STD_Mode_RCP_RI_6.Value & "',[STD_Mode_RCP_RI_7] = '" & TagSrc.STD_Mode_RCP_RI_7.Value & "',[STD_Mode_RCP_RI_8] = '" & TagSrc.STD_Mode_RCP_RI_8.Value & "',[STD_Mode_RCP_RI_9] = '" & TagSrc.STD_Mode_RCP_RI_9.Value & "',[STD_Mode_RCP_RI_10] = '" & TagSrc.STD_Mode_RCP_RI_10.Value & "',[STD_Reduction_RCP_RI_1] = '" & TagSrc.STD_Reduction_RCP_RI_1.Value & "',[STD_Reduction_RCP_RI_2] = '" & TagSrc.STD_Reduction_RCP_RI_2.Value & "',[STD_Reduction_RCP_RI_3] = '" & TagSrc.STD_Reduction_RCP_RI_3.Value & "'," & _
+    "[STD_Reduction_RCP_RI_4] = '" & TagSrc.STD_Reduction_RCP_RI_4.Value & "',[STD_Reduction_RCP_RI_5] = '" & TagSrc.STD_Reduction_RCP_RI_5.Value & "',[STD_Reduction_RCP_RI_6] = '" & TagSrc.STD_Reduction_RCP_RI_6.Value & "',[STD_Reduction_RCP_RI_7] = '" & TagSrc.STD_Reduction_RCP_RI_7.Value & "',[STD_Reduction_RCP_RI_8] = '" & TagSrc.STD_Reduction_RCP_RI_8.Value & "',[STD_Reduction_RCP_RI_9] = '" & TagSrc.STD_Reduction_RCP_RI_9.Value & "',[STD_Reduction_RCP_RI_10] = '" & TagSrc.STD_Reduction_RCP_RI_10.Value & "',[STD_Area_RCP_RI_1] = '" & TagSrc.STD_Area_RCP_RI_1.Value & "',[STD_Area_RCP_RI_2] = '" & TagSrc.STD_Area_RCP_RI_2.Value & "',[STD_Area_RCP_RI_3] = '" & TagSrc.STD_Area_RCP_RI_3.Value & "',[STD_Area_RCP_RI_4] = '" & TagSrc.STD_Area_RCP_RI_4.Value & "',[STD_Area_RCP_RI_5] = '" & TagSrc.STD_Area_RCP_RI_5.Value & "',[STD_Area_RCP_RI_6] = '" & TagSrc.STD_Area_RCP_RI_6.Value & "',[STD_Area_RCP_RI_7] = '" & TagSrc.STD_Area_RCP_RI_7.Value & "'," & _
+    "[STD_Area_RCP_RI_8] = '" & TagSrc.STD_Area_RCP_RI_8.Value & "',[STD_Area_RCP_RI_9] = '" & TagSrc.STD_Area_RCP_RI_9.Value & "',[STD_Area_RCP_RI_10] = '" & TagSrc.STD_Area_RCP_RI_10.Value & "',[STD_RollShape_RCP_RI_1] = '" & TagSrc.STD_RollShape_RCP_RI_1.Value & "',[STD_RollShape_RCP_RI_2] = '" & TagSrc.STD_RollShape_RCP_RI_2.Value & "',[STD_RollShape_RCP_RI_3] = '" & TagSrc.STD_RollShape_RCP_RI_3.Value & "',[STD_RollShape_RCP_RI_4] = '" & TagSrc.STD_RollShape_RCP_RI_4.Value & "',[STD_RollShape_RCP_RI_5] = '" & TagSrc.STD_RollShape_RCP_RI_5.Value & "',[STD_RollShape_RCP_RI_6] = '" & TagSrc.STD_RollShape_RCP_RI_6.Value & "',[STD_RollShape_RCP_RI_7] = '" & TagSrc.STD_RollShape_RCP_RI_7.Value & "',[STD_RollShape_RCP_RI_8] = '" & TagSrc.STD_RollShape_RCP_RI_8.Value & "',[STD_RollShape_RCP_RI_9] = '" & TagSrc.STD_RollShape_RCP_RI_9.Value & "',[STD_RollShape_RCP_RI_10] = '" & TagSrc.STD_RollShape_RCP_RI_10.Value & "',[STD_TangentAngle_RCP_RI_1] = '" & TagSrc.STD_TangentAngle_RCP_RI_1.Value & "'," & _
+    "[STD_TangentAngle_RCP_RI_2] = '" & TagSrc.STD_TangentAngle_RCP_RI_2.Value & "',[STD_TangentAngle_RCP_RI_3] = '" & TagSrc.STD_TangentAngle_RCP_RI_3.Value & "',[STD_TangentAngle_RCP_RI_4] = '" & TagSrc.STD_TangentAngle_RCP_RI_4.Value & "',[STD_TangentAngle_RCP_RI_5] = '" & TagSrc.STD_TangentAngle_RCP_RI_5.Value & "',[STD_TangentAngle_RCP_RI_6] = '" & TagSrc.STD_TangentAngle_RCP_RI_6.Value & "',[STD_TangentAngle_RCP_RI_7] = '" & TagSrc.STD_TangentAngle_RCP_RI_7.Value & "',[STD_TangentAngle_RCP_RI_8] = '" & TagSrc.STD_TangentAngle_RCP_RI_8.Value & "',[STD_TangentAngle_RCP_RI_9] = '" & TagSrc.STD_TangentAngle_RCP_RI_9.Value & "',[STD_TangentAngle_RCP_RI_10] = '" & TagSrc.STD_TangentAngle_RCP_RI_10.Value & "',[STD_ORD_RCP_RI_1] = '" & TagSrc.STD_ORD_RCP_RI_1.Value & "',[STD_ORD_RCP_RI_2] = '" & TagSrc.STD_ORD_RCP_RI_2.Value & "',[STD_ORD_RCP_RI_3] = '" & TagSrc.STD_ORD_RCP_RI_3.Value & "',[STD_ORD_RCP_RI_4] = '" & TagSrc.STD_ORD_RCP_RI_4.Value & "'," & _
+    "[STD_ORD_RCP_RI_5] = '" & TagSrc.STD_ORD_RCP_RI_5.Value & "',[STD_ORD_RCP_RI_6] = '" & TagSrc.STD_ORD_RCP_RI_6.Value & "',[STD_ORD_RCP_RI_7] = '" & TagSrc.STD_ORD_RCP_RI_7.Value & "',[STD_ORD_RCP_RI_8] = '" & TagSrc.STD_ORD_RCP_RI_8.Value & "',[STD_ORD_RCP_RI_9] = '" & TagSrc.STD_ORD_RCP_RI_9.Value & "',[STD_ORD_RCP_RI_10] = '" & TagSrc.STD_ORD_RCP_RI_10.Value & "',[STD_ERD_RCP_RO_1] = '" & TagSrc.STD_ERD_RCP_RO_1.Value & "',[STD_ERD_RCP_RO_2] = '" & TagSrc.STD_ERD_RCP_RO_2.Value & "',[STD_ERD_RCP_RO_3] = '" & TagSrc.STD_ERD_RCP_RO_3.Value & "',[STD_ERD_RCP_RO_4] = '" & TagSrc.STD_ERD_RCP_RO_4.Value & "',[STD_ERD_RCP_RO_5] = '" & TagSrc.STD_ERD_RCP_RO_5.Value & "',[STD_ERD_RCP_RO_6] = '" & TagSrc.STD_ERD_RCP_RO_6.Value & "',[STD_ERD_RCP_RO_7] = '" & TagSrc.STD_ERD_RCP_RO_7.Value & "',[STD_ERD_RCP_RO_8] = '" & TagSrc.STD_ERD_RCP_RO_8.Value & "'," & _
+    "[STD_ERD_RCP_RO_9] = '" & TagSrc.STD_ERD_RCP_RO_9.Value & "',[STD_ERD_RCP_RO_10] = '" & TagSrc.STD_ERD_RCP_RO_10.Value & "',[STD_ERDActual_RCP_RO_1] = '" & TagSrc.STD_ERDActual_RCP_RO_1.Value & "',[STD_ERDActual_RCP_RO_2] = '" & TagSrc.STD_ERDActual_RCP_RO_2.Value & "',[STD_ERDActual_RCP_RO_3] = '" & TagSrc.STD_ERDActual_RCP_RO_3.Value & "',[STD_ERDActual_RCP_RO_4] = '" & TagSrc.STD_ERDActual_RCP_RO_4.Value & "',[STD_ERDActual_RCP_RO_5] = '" & TagSrc.STD_ERDActual_RCP_RO_5.Value & "',[STD_ERDActual_RCP_RO_6] = '" & TagSrc.STD_ERDActual_RCP_RO_6.Value & "',[STD_ERDActual_RCP_RO_7] = '" & TagSrc.STD_ERDActual_RCP_RO_7.Value & "',[STD_ERDActual_RCP_RO_8] = '" & TagSrc.STD_ERDActual_RCP_RO_8.Value & "',[STD_ERDActual_RCP_RO_9] = '" & TagSrc.STD_ERDActual_RCP_RO_9.Value & "',[STD_ERDActual_RCP_RO_10] = '" & TagSrc.STD_ERDActual_RCP_RO_10.Value & "',[STD_RollSetID_RCP_RI_1] = '" & TagSrc.STD_RollSetID_RCP_RI_1.Value & "', " & _
+    "[STD_RollSetID_RCP_RI_2] = '" & TagSrc.STD_RollSetID_RCP_RI_2.Value & "',[STD_RollSetID_RCP_RI_3] = '" & TagSrc.STD_RollSetID_RCP_RI_3.Value & "',[STD_RollSetID_RCP_RI_4] = '" & TagSrc.STD_RollSetID_RCP_RI_4.Value & "',[STD_RollSetID_RCP_RI_5] = '" & TagSrc.STD_RollSetID_RCP_RI_5.Value & "',[STD_RollSetID_RCP_RI_6] = '" & TagSrc.STD_RollSetID_RCP_RI_6.Value & "',[STD_RollSetID_RCP_RI_7] = '" & TagSrc.STD_RollSetID_RCP_RI_7.Value & "',[STD_RollSetID_RCP_RI_8] = '" & TagSrc.STD_RollSetID_RCP_RI_8.Value & "',[STD_RollSetID_RCP_RI_9] = '" & TagSrc.STD_RollSetID_RCP_RI_9.Value & "',[STD_RollSetID_RCP_RI_10] = '" & TagSrc.STD_RollSetID_RCP_RI_10.Value & "',[STD_RPM_RCP_RO_1] = '" & TagSrc.STD_RPM_RCP_RO_1.Value & "',[STD_RPM_RCP_RO_2] = '" & TagSrc.STD_RPM_RCP_RO_2.Value & "',[STD_RPM_RCP_RO_3] = '" & TagSrc.STD_RPM_RCP_RO_3.Value & "',[STD_RPM_RCP_RO_4] = '" & TagSrc.STD_RPM_RCP_RO_4.Value & "'," & _
+    "[STD_RPM_RCP_RO_5] = '" & TagSrc.STD_RPM_RCP_RO_5.Value & "',[STD_RPM_RCP_RO_6] = '" & TagSrc.STD_RPM_RCP_RO_6.Value & "',[STD_RPM_RCP_RO_7] = '" & TagSrc.STD_RPM_RCP_RO_7.Value & "',[STD_RPM_RCP_RO_8] = '" & TagSrc.STD_RPM_RCP_RO_8.Value & "',[STD_RPM_RCP_RO_9] = '" & TagSrc.STD_RPM_RCP_RO_9.Value & "',[STD_RPM_RCP_RO_10] = '" & TagSrc.STD_RPM_RCP_RO_10.Value & "',[STD_RPMCorr_RCP_RO_1] = '" & TagSrc.STD_RPMCorr_RCP_RO_1.Value & "',[STD_RPMCorr_RCP_RO_2] = '" & TagSrc.STD_RPMCorr_RCP_RO_2.Value & "',[STD_RPMCorr_RCP_RO_3] = '" & TagSrc.STD_RPMCorr_RCP_RO_3.Value & "',[STD_RPMCorr_RCP_RO_4] = '" & TagSrc.STD_RPMCorr_RCP_RO_4.Value & "',[STD_RPMCorr_RCP_RO_5] = '" & TagSrc.STD_RPMCorr_RCP_RO_5.Value & "',[STD_RPMCorr_RCP_RO_6] = '" & TagSrc.STD_RPMCorr_RCP_RO_6.Value & "',[STD_RPMCorr_RCP_RO_7] = '" & TagSrc.STD_RPMCorr_RCP_RO_7.Value & "',[STD_RPMCorr_RCP_RO_8] = '" & TagSrc.STD_RPMCorr_RCP_RO_8.Value & "' " & _
+    "WHERE RcpID = '" & RcpID & "'"
+    cmd.ActiveConnection = cnSrc
+    rsSrc.Open strSql, cnSrc
+ 
+    strSql = "UPDATE [k2_setup] SET" & _
+    "[STD_RPMCorr_RCP_RO_9] = '" & TagSrc.STD_RPMCorr_RCP_RO_9.Value & "',[STD_RPMCorr_RCP_RO_10] = '" & TagSrc.STD_RPMCorr_RCP_RO_10.Value & "',[STD_LeadSpeed_RCP_RI_1] = '" & TagSrc.STD_LeadSpeed_RCP_RI_1.Value & "',[STD_LeadSpeed_RCP_RI_2] = '" & TagSrc.STD_LeadSpeed_RCP_RI_2.Value & "',[STD_LeadSpeed_RCP_RI_3] = '" & TagSrc.STD_LeadSpeed_RCP_RI_3.Value & "',[STD_LeadSpeed_RCP_RI_4] = '" & TagSrc.STD_LeadSpeed_RCP_RI_4.Value & "',[STD_LeadSpeed_RCP_RI_5] = '" & TagSrc.STD_LeadSpeed_RCP_RI_5.Value & "',[STD_LeadSpeed_RCP_RI_6] = '" & TagSrc.STD_LeadSpeed_RCP_RI_6.Value & "',[STD_LeadSpeed_RCP_RI_7] = '" & TagSrc.STD_LeadSpeed_RCP_RI_7.Value & "',[STD_LeadSpeed_RCP_RI_8] = '" & TagSrc.STD_LeadSpeed_RCP_RI_8.Value & "',[STD_LeadSpeed_RCP_RI_9] = '" & TagSrc.STD_LeadSpeed_RCP_RI_9.Value & "',[STD_LeadSpeed_RCP_RI_10] = '" & TagSrc.STD_LeadSpeed_RCP_RI_10.Value & "',[STD_ImpDrop_RCP_RI_1] = '" & TagSrc.STD_ImpDrop_RCP_RI_1.Value & "', [STD_ImpDrop_RCP_RI_2] = '" & TagSrc.STD_ImpDrop_RCP_RI_2.Value & "'," & _
+    "[STD_ImpDrop_RCP_RI_3] = '" & TagSrc.STD_ImpDrop_RCP_RI_3.Value & "',[STD_ImpDrop_RCP_RI_4] = '" & TagSrc.STD_ImpDrop_RCP_RI_4.Value & "',[STD_ImpDrop_RCP_RI_5] = '" & TagSrc.STD_ImpDrop_RCP_RI_5.Value & "',[STD_ImpDrop_RCP_RI_6] = '" & TagSrc.STD_ImpDrop_RCP_RI_6.Value & "',[STD_ImpDrop_RCP_RI_7] = '" & TagSrc.STD_ImpDrop_RCP_RI_7.Value & "',[STD_ImpDrop_RCP_RI_8] = '" & TagSrc.STD_ImpDrop_RCP_RI_8.Value & "',[STD_ImpDrop_RCP_RI_9] = '" & TagSrc.STD_ImpDrop_RCP_RI_9.Value & "',[STD_ImpDrop_RCP_RI_10] = '" & TagSrc.STD_ImpDrop_RCP_RI_10.Value & "',[STD_Gear_SEL_RCP_RI] = '" & TagSrc.STD_Gear_SEL_RCP_RI.Value & "',[STD_RollSetID2_RCP_RI_1] = '" & TagSrc.STD_RollSetID2_RCP_RI_1.Value & "',[STD_RollSetID2_RCP_RI_2] = '" & TagSrc.STD_RollSetID2_RCP_RI_2.Value & "',[STD_RollSetID2_RCP_RI_3] = '" & TagSrc.STD_RollSetID2_RCP_RI_3.Value & "',[STD_RollSetID2_RCP_RI_4] = '" & TagSrc.STD_RollSetID2_RCP_RI_4.Value & "',[STD_RollSetID2_RCP_RI_5] = '" & TagSrc.STD_RollSetID2_RCP_RI_5.Value & "', " & _
+    "[STD_RollSetID2_RCP_RI_6] = '" & TagSrc.STD_RollSetID2_RCP_RI_6.Value & "',[STD_RollSetID2_RCP_RI_7] = '" & TagSrc.STD_RollSetID2_RCP_RI_7.Value & "',[STD_RollSetID2_RCP_RI_8] = '" & TagSrc.STD_RollSetID2_RCP_RI_8.Value & "',[STD_RollSetID2_RCP_RI_9] = '" & TagSrc.STD_RollSetID2_RCP_RI_9.Value & "',[STD_RollSetID2_RCP_RI_10] = '" & TagSrc.STD_RollSetID2_RCP_RI_10.Value & "',[STD_Rfact_RCP_RI_1] = '" & TagSrc.STD_Rfact_RCP_RI_1.Value & "',[STD_Rfact_RCP_RI_2] = '" & TagSrc.STD_Rfact_RCP_RI_2.Value & "',[STD_Rfact_RCP_RI_3] = '" & TagSrc.STD_Rfact_RCP_RI_3.Value & "',[STD_Rfact_RCP_RI_4] = '" & TagSrc.STD_Rfact_RCP_RI_4.Value & "',[STD_Rfact_RCP_RI_5] = '" & TagSrc.STD_Rfact_RCP_RI_5.Value & "',[STD_Rfact_RCP_RI_6] = '" & TagSrc.STD_Rfact_RCP_RI_6.Value & "',[STD_Rfact_RCP_RI_7] = '" & TagSrc.STD_Rfact_RCP_RI_7.Value & "',[STD_Rfact_RCP_RI_8] = '" & TagSrc.STD_Rfact_RCP_RI_8.Value & "',[STD_Rfact_RCP_RI_9] = '" & TagSrc.STD_Rfact_RCP_RI_9.Value & "', " & _
+    "[STD_Rfact_RCP_RI_10] = '" & TagSrc.STD_Rfact_RCP_RI_10.Value & "',[STD_Gap_RCP_RI_1] = '" & TagSrc.STD_Gap_RCP_RI_1.Value & "',[STD_Gap_RCP_RI_2] = '" & TagSrc.STD_Gap_RCP_RI_2.Value & "',[STD_Gap_RCP_RI_3] = '" & TagSrc.STD_Gap_RCP_RI_3.Value & "',[STD_Gap_RCP_RI_4] = '" & TagSrc.STD_Gap_RCP_RI_4.Value & "',[STD_Gap_RCP_RI_5] = '" & TagSrc.STD_Gap_RCP_RI_5.Value & "',[STD_Gap_RCP_RI_6] = '" & TagSrc.STD_Gap_RCP_RI_6.Value & "',[STD_Gap_RCP_RI_7] = '" & TagSrc.STD_Gap_RCP_RI_7.Value & "',[STD_Gap_RCP_RI_8] = '" & TagSrc.STD_Gap_RCP_RI_8.Value & "',[STD_Gap_RCP_RI_9] = '" & TagSrc.STD_Gap_RCP_RI_9.Value & "',[STD_Gap_RCP_RI_10] = '" & TagSrc.STD_Gap_RCP_RI_10.Value & "',[STD_LinSpeed_RCP_RI_1] = '" & TagSrc.STD_LinSpeed_RCP_RI_1.Value & "',[STD_LinSpeed_RCP_RI_2] = '" & TagSrc.STD_LinSpeed_RCP_RI_2.Value & "', " & _
+    "[STD_LinSpeed_RCP_RI_3] = '" & TagSrc.STD_LinSpeed_RCP_RI_3.Value & "',[STD_LinSpeed_RCP_RI_4] = '" & TagSrc.STD_LinSpeed_RCP_RI_4.Value & "',[STD_LinSpeed_RCP_RI_5] = '" & TagSrc.STD_LinSpeed_RCP_RI_5.Value & "',[STD_LinSpeed_RCP_RI_6] = '" & TagSrc.STD_LinSpeed_RCP_RI_6.Value & "',[STD_LinSpeed_RCP_RI_7] = '" & TagSrc.STD_LinSpeed_RCP_RI_7.Value & "',[STD_LinSpeed_RCP_RI_8] = '" & TagSrc.STD_LinSpeed_RCP_RI_8.Value & "',[STD_LinSpeed_RCP_RI_9] = '" & TagSrc.STD_LinSpeed_RCP_RI_9.Value & "',[STD_LinSpeed_RCP_RI_10] = '" & TagSrc.STD_LinSpeed_RCP_RI_10.Value & "',[STD_HECFront_RCP_RO_1] = '" & TagSrc.STD_HECFront_RCP_RO_1.Value & "',[STD_HECFront_RCP_RO_2] = '" & TagSrc.STD_HECFront_RCP_RO_2.Value & "',[STD_HECFront_RCP_RO_3] = '" & TagSrc.STD_HECFront_RCP_RO_3.Value & "',[STD_HECFront_RCP_RO_4] = '" & TagSrc.STD_HECFront_RCP_RO_4.Value & "',[STD_HECFront_RCP_RO_5] = '" & TagSrc.STD_HECFront_RCP_RO_5.Value & "',[STD_HECFront_RCP_RO_6] = '" & TagSrc.STD_HECFront_RCP_RO_6.Value & "' " & _
+    "WHERE RcpID = '" & RcpID & "'"
+    cmd.ActiveConnection = cnSrc
+    rsSrc.Open strSql, cnSrc
+   
+    strSql = "UPDATE [k2_Setup] SET" & _
+    "[STD_HECFront_RCP_RO_1] = '" & TagSrc.STD_HECFront_RCP_RO_1.Value & "',[STD_HECFront_RCP_RO_2] = '" & TagSrc.STD_HECFront_RCP_RO_2.Value & "',[STD_HECFront_RCP_RO_3] = '" & TagSrc.STD_HECFront_RCP_RO_3.Value & "',[STD_HECFront_RCP_RO_4] = '" & TagSrc.STD_HECFront_RCP_RO_4.Value & "',[STD_HECFront_RCP_RO_5] = '" & TagSrc.STD_HECFront_RCP_RO_5.Value & "',[STD_HECFront_RCP_RO_6] = '" & TagSrc.STD_HECFront_RCP_RO_6.Value & "',[STD_HECFront_RCP_RO_7] = '" & TagSrc.STD_HECFront_RCP_RO_7.Value & "',[STD_HECFront_RCP_RO_8] = '" & TagSrc.STD_HECFront_RCP_RO_8.Value & "',[STD_HECFront_RCP_RO_9] = '" & TagSrc.STD_HECFront_RCP_RO_9.Value & "',[STD_HECFront_RCP_RO_10] = '" & TagSrc.STD_HECFront_RCP_RO_10.Value & "',[STD_HECTail_RCP_RO_1] = '" & TagSrc.STD_HECTail_RCP_RO_1.Value & "',[STD_HECTail_RCP_RO_2] = '" & TagSrc.STD_HECTail_RCP_RO_2.Value & "',[STD_HECTail_RCP_RO_3] = '" & TagSrc.STD_HECTail_RCP_RO_3.Value & "',[STD_HECTail_RCP_RO_4] = '" & TagSrc.STD_HECTail_RCP_RO_4.Value & "', " & _
+    "[STD_HECTail_RCP_RO_5] = '" & TagSrc.STD_HECTail_RCP_RO_5.Value & "',[STD_HECTail_RCP_RO_6] = '" & TagSrc.STD_HECTail_RCP_RO_6.Value & "',[STD_HECTail_RCP_RO_7] = '" & TagSrc.STD_HECTail_RCP_RO_7.Value & "',[STD_HECTail_RCP_RO_8] = '" & TagSrc.STD_HECTail_RCP_RO_8.Value & "',[STD_HECTail_RCP_RO_9] = '" & TagSrc.STD_HECTail_RCP_RO_9.Value & "',[STD_HECTail_RCP_RO_10] = '" & TagSrc.STD_HECTail_RCP_RO_10.Value & "',[STD_SpareReal_RCP_RI_1] = '" & TagSrc.STD_SpareReal_RCP_RI_1.Value & "',[STD_SpareReal_RCP_RI_2] = '" & TagSrc.STD_SpareReal_RCP_RI_2.Value & "',[STD_SpareReal_RCP_RI_3] = '" & TagSrc.STD_SpareReal_RCP_RI_3.Value & "',[STD_SpareReal_RCP_RI_4] = '" & TagSrc.STD_SpareReal_RCP_RI_4.Value & "',[STD_SpareReal_RCP_RI_5] = '" & TagSrc.STD_SpareReal_RCP_RI_5.Value & "',[STD_SpareReal_RCP_RI_6] = '" & TagSrc.STD_SpareReal_RCP_RI_6.Value & "',[STD_SpareReal_RCP_RI_7] = '" & TagSrc.STD_SpareReal_RCP_RI_7.Value & "',[STD_SpareReal_RCP_RI_8] = '" & TagSrc.STD_SpareReal_RCP_RI_8.Value & "', " & _
+    "[STD_SpareReal_RCP_RI_9] = '" & TagSrc.STD_SpareReal_RCP_RI_9.Value & "',[STD_SpareReal_RCP_RI_10] = '" & TagSrc.STD_SpareReal_RCP_RI_10.Value & "',[STD_SpareInt_RCP_RI_1] = '" & TagSrc.STD_SpareInt_RCP_RI_1.Value & "',[STD_SpareInt_RCP_RI_2] = '" & TagSrc.STD_SpareInt_RCP_RI_2.Value & "',[STD_SpareInt_RCP_RI_3] = '" & TagSrc.STD_SpareInt_RCP_RI_3.Value & "',[STD_SpareInt_RCP_RI_4] = '" & TagSrc.STD_SpareInt_RCP_RI_4.Value & "',[STD_SpareInt_RCP_RI_5] = '" & TagSrc.STD_SpareInt_RCP_RI_5.Value & "',[STD_SpareInt_RCP_RI_6] = '" & TagSrc.STD_SpareInt_RCP_RI_6.Value & "',[STD_SpareInt_RCP_RI_7] = '" & TagSrc.STD_SpareInt_RCP_RI_7.Value & "',[STD_SpareInt_RCP_RI_8] = '" & TagSrc.STD_SpareInt_RCP_RI_8.Value & "',[STD_SpareInt_RCP_RI_9] = '" & TagSrc.STD_SpareInt_RCP_RI_9.Value & "',[STD_SpareInt_RCP_RI_10] = '" & TagSrc.STD_SpareInt_RCP_RI_10.Value & "',[CNVR2_SpeedTrim_RCP_RI] = '" & TagSrc.CNVR2_SpeedTrim_RCP_RI.Value & "',[CNVR2_SpeedRefRPM_RCP_RI] = '" & TagSrc.CNVR2_SpeedRefRPM_RCP_RI.Value & "', " & _
+    "[CNVR2_RPM_RCP_RO] = '" & TagSrc.CNVR2_RPM_RCP_RO.Value & "',[CVNR2_SpareReal_RCP_RI] = '" & TagSrc.CVNR2_SpareReal_RCP_RI.Value & "',[K2_HEC_TfHead_RCP_RI] = '" & TagSrc.K2_HEC_TfHead_RCP_RI.Value & "',[K2_HEC_TfTail_RCP_RI] = '" & TagSrc.K2_HEC_TfTail_RCP_RI.Value & "',[K2_HEC_TfHeadRampRateFac_RCP_RI] = '" & TagSrc.K2_HEC_TfHeadRampRateFac_RCP_RI.Value & "',[K2_HEC_TfTailRampRateFac_RCP_RI] = '" & TagSrc.K2_HEC_TfTailRampRateFac_RCP_RI.Value & "',[K2_HEC_TfTimeDelayFact_RCP_RI] = '" & TagSrc.K2_HEC_TfTimeDelayFact_RCP_RI.Value & "',[K2_HEC_TfHeadAccTime_RCP_RO] = '" & TagSrc.K2_HEC_TfHeadAccTime_RCP_RO.Value & "',[K2_HEC_TfTailAccTime_RCP_RO] = '" & TagSrc.K2_HEC_TfTailAccTime_RCP_RO.Value & "',[K2_HEC_TfTimeDelay_RCP_RO] = '" & TagSrc.K2_HEC_TfTimeDelay_RCP_RO.Value & "',[K2_HEC_SpareReal_RCP_RO] = '" & TagSrc.K2_HEC_SpareReal_RCP_RO.Value & "',[LPR_Config_RCP_RI] = '" & TagSrc.LPR_Config_RCP_RI.Value & "',[LPR_HeightSetpoint_RCP_RI] = '" & TagSrc.LPR_HeightSetpoint_RCP_RI.Value & "'," & _
+    "[LRP_UpReacTime_RCP_RI] = '" & TagSrc.LRP_UpReacTime_RCP_RI.Value & "',[LPR_DnReacTime_RCP_RI] = '" & TagSrc.LPR_DnReacTime_RCP_RI.Value & "',[LPR_Spare_RCP_RI] = '" & TagSrc.LPR_Spare_RCP_RI.Value & "',[GEN_K2_SpareIntArr1_RCP_RI_1] = '" & TagSrc.GEN_K2_SpareIntArr1_RCP_RI_1.Value & "',[GEN_K2_SpareIntArr1_RCP_RI_2] = '" & TagSrc.GEN_K2_SpareIntArr1_RCP_RI_2.Value & "',[GEN_K2_SpareIntArr1_RCP_RI_3] = '" & TagSrc.GEN_K2_SpareIntArr1_RCP_RI_3.Value & "',[GEN_K2_SpareIntArr1_RCP_RI_4] = '" & TagSrc.GEN_K2_SpareIntArr1_RCP_RI_4.Value & "',[GEN_K2_SpareIntArr1_RCP_RI_5] = '" & TagSrc.GEN_K2_SpareIntArr1_RCP_RI_5.Value & "',[GEN_K2_SpareIntArr1_RCP_RI_6] = '" & TagSrc.GEN_K2_SpareIntArr1_RCP_RI_6.Value & "',[GEN_K2_SpareIntArr1_RCP_RI_7] = '" & TagSrc.GEN_K2_SpareIntArr1_RCP_RI_7.Value & "',[GEN_K2_SpareIntArr1_RCP_RI_8] = '" & TagSrc.GEN_K2_SpareIntArr1_RCP_RI_8.Value & "',[GEN_K2_SpareIntArr1_RCP_RI_9] = '" & TagSrc.GEN_K2_SpareIntArr1_RCP_RI_9.Value & "', " & _
+    "[GEN_K2_SpareIntArr1_RCP_RI_10] = '" & TagSrc.GEN_K2_SpareIntArr1_RCP_RI_10.Value & "',[GEN_K2_SpareIntArr2_RCP_RI_1] = '" & TagSrc.GEN_K2_SpareIntArr2_RCP_RI_1.Value & "',[GEN_K2_SpareIntArr2_RCP_RI_2] = '" & TagSrc.GEN_K2_SpareIntArr2_RCP_RI_2.Value & "',[GEN_K2_SpareIntArr2_RCP_RI_3] = '" & TagSrc.GEN_K2_SpareIntArr2_RCP_RI_3.Value & "',[GEN_K2_SpareIntArr2_RCP_RI_4] = '" & TagSrc.GEN_K2_SpareIntArr2_RCP_RI_4.Value & "',[GEN_K2_SpareIntArr2_RCP_RI_5] = '" & TagSrc.GEN_K2_SpareIntArr2_RCP_RI_5.Value & "',[GEN_K2_SpareIntArr2_RCP_RI_6] = '" & TagSrc.GEN_K2_SpareIntArr2_RCP_RI_6.Value & "',[GEN_K2_SpareIntArr2_RCP_RI_7] = '" & TagSrc.GEN_K2_SpareIntArr2_RCP_RI_7.Value & "',[GEN_K2_SpareIntArr2_RCP_RI_8] = '" & TagSrc.GEN_K2_SpareIntArr2_RCP_RI_8.Value & "',[GEN_K2_SpareIntArr2_RCP_RI_9] = '" & TagSrc.GEN_K2_SpareIntArr2_RCP_RI_9.Value & "',[GEN_K2_SpareIntArr2_RCP_RI_10] = '" & TagSrc.GEN_K2_SpareIntArr2_RCP_RI_10.Value & "', " & _
+    "[GEN_K2_SpareIntArr3_RCP_RI_1] = '" & TagSrc.GEN_K2_SpareIntArr3_RCP_RI_1.Value & "',[GEN_K2_SpareIntArr3_RCP_RI_2] = '" & TagSrc.GEN_K2_SpareIntArr3_RCP_RI_2.Value & "',[GEN_K2_SpareIntArr3_RCP_RI_3] = '" & TagSrc.GEN_K2_SpareIntArr3_RCP_RI_3.Value & "',[GEN_K2_SpareIntArr3_RCP_RI_4] = '" & TagSrc.GEN_K2_SpareIntArr3_RCP_RI_4.Value & "',[GEN_K2_SpareIntArr3_RCP_RI_5] = '" & TagSrc.GEN_K2_SpareIntArr3_RCP_RI_5.Value & "',[GEN_K2_SpareIntArr3_RCP_RI_6] = '" & TagSrc.GEN_K2_SpareIntArr3_RCP_RI_6.Value & "',[GEN_K2_SpareIntArr3_RCP_RI_7] = '" & TagSrc.GEN_K2_SpareIntArr3_RCP_RI_7.Value & "',[GEN_K2_SpareIntArr3_RCP_RI_8] = '" & TagSrc.GEN_K2_SpareIntArr3_RCP_RI_8.Value & "',[GEN_K2_SpareIntArr3_RCP_RI_9] = '" & TagSrc.GEN_K2_SpareIntArr3_RCP_RI_9.Value & "',[GEN_K2_SpareIntArr3_RCP_RI_10] = '" & TagSrc.GEN_K2_SpareIntArr3_RCP_RI_10.Value & "', " & _
+    "[GEN_K2_SpareRealArr1_RCP_RI_1] = '" & TagSrc.GEN_K2_SpareRealArr1_RCP_RI_1.Value & "',[GEN_K2_SpareRealArr1_RCP_RI_2] = '" & TagSrc.GEN_K2_SpareRealArr1_RCP_RI_2.Value & "',[GEN_K2_SpareRealArr1_RCP_RI_3] = '" & TagSrc.GEN_K2_SpareRealArr1_RCP_RI_3.Value & "',[GEN_K2_SpareRealArr1_RCP_RI_4] = '" & TagSrc.GEN_K2_SpareRealArr1_RCP_RI_4.Value & "',[GEN_K2_SpareRealArr1_RCP_RI_5] = '" & TagSrc.GEN_K2_SpareRealArr1_RCP_RI_5.Value & "',[GEN_K2_SpareRealArr1_RCP_RI_6] = '" & TagSrc.GEN_K2_SpareRealArr1_RCP_RI_6.Value & "',[GEN_K2_SpareRealArr1_RCP_RI_7] = '" & TagSrc.GEN_K2_SpareRealArr1_RCP_RI_7.Value & "',[GEN_K2_SpareRealArr1_RCP_RI_8] = '" & TagSrc.GEN_K2_SpareRealArr1_RCP_RI_8.Value & "',[GEN_K2_SpareRealArr1_RCP_RI_9] = '" & TagSrc.GEN_K2_SpareRealArr1_RCP_RI_9.Value & "',[GEN_K2_SpareRealArr1_RCP_RI_10] = '" & TagSrc.GEN_K2_SpareRealArr1_RCP_RI_10.Value & "', " & _
+    "[GEN_K2_BarPassageTime_RCP_RI] = '" & TagSrc.GEN_K2_BarPassageTime_RCP_RI.Value & "',[GEN_K2_BarSafetyTime_RCP_RI] = '" & TagSrc.GEN_K2_BarSafetyTime_RCP_RI.Value & "',[K2_HEC_TfTailTimeDelay_RCP_RO] = '" & TagSrc.K2_HEC_TfTailTimeDelay_RCP_RO.Value & "',[GEN_K2_ProdSize_RCP_RI] = '" & TagSrc.GEN_K2_ProdSize_RCP_RI.Value & "',[GEN_K2_LinSpeed_RCP_RI] = '" & TagSrc.GEN_K2_LinSpeed_RCP_RI.Value & "' " & _
+    "WHERE RcpID = '" & RcpID & "'"
+    cmd.ActiveConnection = cnSrc
+    rsSrc.Open strSql, cnSrc
+   
+    Exit Function
+   
+ErrHandler:
+    MsgBox Err.Description
+   
+End Function
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * *         UPDATE ON SAVE        * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * *      Q_Setup        * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Function UpdateQSetup(RcpID As String, cnSrc As ADODB.Connection)
+Dim strSql As String
+Dim cmd As New ADODB.Command
+Dim rsSrc As New ADODB.Recordset
+Dim AllTags As QSetupGroup
+Dim TagSrc As QSetupTags
+On Error GoTo ErrHandler
+ 
+    AllTags = TGroup.LoadQSetupGroup
+    TagSrc = AllTags.DB
+ 
+    strSql = "UPDATE [q_setup] SET" & _
+    "[RcpGrade] = '" & TagSrc.RcpGrade.Value & "',[RO_DBT_MmiSET_1] = '" & TagSrc.RO_DBT_MmiSET_1.Value & "',[RO_DBT_MmiSET_2] = '" & TagSrc.RO_DBT_MmiSET_2.Value & "',[RO_DBT_MmiSET_3] = '" & TagSrc.RO_DBT_MmiSET_3.Value & "',[RO_DBT_MmiSET_4] = '" & TagSrc.RO_DBT_MmiSET_4.Value & "',[RO_DBT_MmiSET_5] = '" & TagSrc.RO_DBT_MmiSET_5.Value & "',[RO_DBT_MmiSET_6] = '" & TagSrc.RO_DBT_MmiSET_6.Value & "',[RO_DBT_MmiSET_7] = '" & TagSrc.RO_DBT_MmiSET_7.Value & "',[RO_DBT_MmiSET_8] = '" & TagSrc.RO_DBT_MmiSET_8.Value & "',[RO_DBT_MmiSET_9] = '" & TagSrc.RO_DBT_MmiSET_9.Value & "',[RO_DBT_MmiSET_10] = '" & TagSrc.RO_DBT_MmiSET_10.Value & "',[RO_DBT_MmiSET_11] = '" & TagSrc.RO_DBT_MmiSET_11.Value & "',[RO_DBT_MmiSET_12] = '" & TagSrc.RO_DBT_MmiSET_12.Value & "',[RO_DBT_MmiSET_13] = '" & TagSrc.RO_DBT_MmiSET_13.Value & "', " & _
+    "[RO_DBT_MmiSET_14] = '" & TagSrc.RO_DBT_MmiSET_14.Value & "',[RO_DBT_MmiSET_15] = '" & TagSrc.RO_DBT_MmiSET_15.Value & "',[RO_DCH_MmiSET_1] = '" & TagSrc.RO_DCH_MmiSET_1.Value & "',[RO_DCH_MmiSET_2] = '" & TagSrc.RO_DCH_MmiSET_2.Value & "',[RO_DCH_MmiSET_3] = '" & TagSrc.RO_DCH_MmiSET_3.Value & "',[RO_DCH_MmiSET_4] = '" & TagSrc.RO_DCH_MmiSET_4.Value & "',[RO_DCH_MmiSET_5] = '" & TagSrc.RO_DCH_MmiSET_5.Value & "',[RO_DCH_MmiSET_6] = '" & TagSrc.RO_DCH_MmiSET_6.Value & "',[RO_DCH_MmiSET_7] = '" & TagSrc.RO_DCH_MmiSET_7.Value & "',[RO_DCH_MmiSET_8] = '" & TagSrc.RO_DCH_MmiSET_8.Value & "',[RO_DCH_MmiSET_9] = '" & TagSrc.RO_DCH_MmiSET_9.Value & "',[RO_DCH_MmiSET_10] = '" & TagSrc.RO_DCH_MmiSET_10.Value & "',[RO_DCH_MmiSET_11] = '" & TagSrc.RO_DCH_MmiSET_11.Value & "',[RO_DCH_MmiSET_12] = '" & TagSrc.RO_DCH_MmiSET_12.Value & "'," & _
+    "[RO_DCH_MmiSET_13] = '" & TagSrc.RO_DCH_MmiSET_13.Value & "',[RO_DCH_MmiSET_14] = '" & TagSrc.RO_DCH_MmiSET_14.Value & "',[RO_DCH_MmiSET_15] = '" & TagSrc.RO_DCH_MmiSET_15.Value & "',[RO_DFR_MmiTRIM_1] = '" & TagSrc.RO_DFR_MmiTRIM_1.Value & "',[RO_DFR_MmiTRIM_2] = '" & TagSrc.RO_DFR_MmiTRIM_2.Value & "',[RO_DFR_MmiTRIM_3] = '" & TagSrc.RO_DFR_MmiTRIM_3.Value & "',[RO_DFR_MmiTRIM_4] = '" & TagSrc.RO_DFR_MmiTRIM_4.Value & "',[RO_DFR_MmiTRIM_5] = '" & TagSrc.RO_DFR_MmiTRIM_5.Value & "',[RO_DFR_MmiTRIM_6] = '" & TagSrc.RO_DFR_MmiTRIM_6.Value & "',[RO_DFR_MmiTRIM_7] = '" & TagSrc.RO_DFR_MmiTRIM_7.Value & "',[RO_DFR_MmiTRIM_8] = '" & TagSrc.RO_DFR_MmiTRIM_8.Value & "',[RO_DFR_MmiTRIM_9] = '" & TagSrc.RO_DFR_MmiTRIM_9.Value & "',[RO_DFR_MmiTRIM_10] = '" & TagSrc.RO_DFR_MmiTRIM_10.Value & "',[RO_DFR_MmiTRIM_11] = '" & TagSrc.RO_DFR_MmiTRIM_11.Value & "'," & _
+    "[RO_DFR_MmiTRIM_12] = '" & TagSrc.RO_DFR_MmiTRIM_12.Value & "',[RO_DFR_MmiTRIM_13] = '" & TagSrc.RO_DFR_MmiTRIM_13.Value & "',[RO_DFR_MmiTRIM_14] = '" & TagSrc.RO_DFR_MmiTRIM_14.Value & "',[RO_DFR_MmiTRIM_15] = '" & TagSrc.RO_DFR_MmiTRIM_15.Value & "',[RO_DPR_MmiSET_1] = '" & TagSrc.RO_DPR_MmiSET_1.Value & "',[RO_DPR_MmiSET_2] = '" & TagSrc.RO_DPR_MmiSET_2.Value & "',[RO_DPR_MmiSET_3] = '" & TagSrc.RO_DPR_MmiSET_3.Value & "',[RO_DPR_MmiSET_4] = '" & TagSrc.RO_DPR_MmiSET_4.Value & "',[RO_DPR_MmiSET_5] = '" & TagSrc.RO_DPR_MmiSET_5.Value & "',[RO_DPR_MmiSET_6] = '" & TagSrc.RO_DPR_MmiSET_6.Value & "',[RO_DPR_MmiSET_7] = '" & TagSrc.RO_DPR_MmiSET_7.Value & "',[RO_DPR_MmiSET_8] = '" & TagSrc.RO_DPR_MmiSET_8.Value & "',[RO_DPR_MmiSET_9] = '" & TagSrc.RO_DPR_MmiSET_9.Value & "',[RO_DPR_MmiSET_10] = '" & TagSrc.RO_DPR_MmiSET_10.Value & "', " & _
+    "[RO_DPR_MmiSET_11] = '" & TagSrc.RO_DPR_MmiSET_11.Value & "',[RO_DPR_MmiSET_12] = '" & TagSrc.RO_DPR_MmiSET_12.Value & "',[RO_DPR_MmiSET_13] = '" & TagSrc.RO_DPR_MmiSET_13.Value & "',[RO_DPR_MmiSET_14] = '" & TagSrc.RO_DPR_MmiSET_14.Value & "',[RO_DPR_MmiSET_15] = '" & TagSrc.RO_DPR_MmiSET_15.Value & "',[RO_DTB_MmiTRIM_1] = '" & TagSrc.RO_DTB_MmiTRIM_1.Value & "',[RO_DTB_MmiTRIM_2] = '" & TagSrc.RO_DTB_MmiTRIM_2.Value & "',[RO_DTB_MmiTRIM_3] = '" & TagSrc.RO_DTB_MmiTRIM_3.Value & "',[RO_DTB_MmiTRIM_4] = '" & TagSrc.RO_DTB_MmiTRIM_4.Value & "',[RO_DTB_MmiTRIM_5] = '" & TagSrc.RO_DTB_MmiTRIM_5.Value & "',[RO_DTB_MmiTRIM_6] = '" & TagSrc.RO_DTB_MmiTRIM_6.Value & "',[RO_DTB_MmiTRIM_7] = '" & TagSrc.RO_DTB_MmiTRIM_7.Value & "',[RO_DTB_MmiTRIM_8] = '" & TagSrc.RO_DTB_MmiTRIM_8.Value & "',[RO_DTB_MmiTRIM_9] = '" & TagSrc.RO_DTB_MmiTRIM_9.Value & "'," & _
+    "[RO_DTB_MmiTRIM_10] = '" & TagSrc.RO_DTB_MmiTRIM_10.Value & "',[RO_DTB_MmiTRIM_11] = '" & TagSrc.RO_DTB_MmiTRIM_11.Value & "',[RO_DTB_MmiTRIM_12] = '" & TagSrc.RO_DTB_MmiTRIM_12.Value & "',[RO_DTB_MmiTRIM_13] = '" & TagSrc.RO_DTB_MmiTRIM_13.Value & "',[RO_DTB_MmiTRIM_14] = '" & TagSrc.RO_DTB_MmiTRIM_14.Value & "',[RO_DTB_MmiTRIM_15] = '" & TagSrc.RO_DTB_MmiTRIM_15.Value & "',[RO_EBT_MmiSET_1] = '" & TagSrc.RO_EBT_MmiSET_1.Value & "',[RO_EBT_MmiSET_2] = '" & TagSrc.RO_EBT_MmiSET_2.Value & "',[RO_EBT_MmiSET_3] = '" & TagSrc.RO_EBT_MmiSET_3.Value & "',[RO_EBT_MmiSET_4] = '" & TagSrc.RO_EBT_MmiSET_4.Value & "',[RO_EBT_MmiSET_5] = '" & TagSrc.RO_EBT_MmiSET_5.Value & "',[RO_EBT_MmiSET_6] = '" & TagSrc.RO_EBT_MmiSET_6.Value & "',[RO_EBT_MmiSET_7] = '" & TagSrc.RO_EBT_MmiSET_7.Value & "',[RO_EBT_MmiSET_8] = '" & TagSrc.RO_EBT_MmiSET_8.Value & "'," & _
+    "[RO_EBT_MmiSET_9] = '" & TagSrc.RO_EBT_MmiSET_9.Value & "',[RO_EBT_MmiSET_10] = '" & TagSrc.RO_EBT_MmiSET_10.Value & "',[RO_EBT_MmiSET_11] = '" & TagSrc.RO_EBT_MmiSET_11.Value & "',[RO_EBT_MmiSET_12] = '" & TagSrc.RO_EBT_MmiSET_12.Value & "',[RO_EBT_MmiSET_13] = '" & TagSrc.RO_EBT_MmiSET_13.Value & "',[RO_EBT_MmiSET_14] = '" & TagSrc.RO_EBT_MmiSET_14.Value & "',[RO_EBT_MmiSET_15] = '" & TagSrc.RO_EBT_MmiSET_15.Value & "',[RO_ECH_MmiSET_1] = '" & TagSrc.RO_ECH_MmiSET_1.Value & "',[RO_ECH_MmiSET_2] = '" & TagSrc.RO_ECH_MmiSET_2.Value & "',[RO_ECH_MmiSET_3] = '" & TagSrc.RO_ECH_MmiSET_3.Value & "',[RO_ECH_MmiSET_4] = '" & TagSrc.RO_ECH_MmiSET_4.Value & "',[RO_ECH_MmiSET_5] = '" & TagSrc.RO_ECH_MmiSET_5.Value & "',[RO_ECH_MmiSET_6] = '" & TagSrc.RO_ECH_MmiSET_6.Value & "',[RO_ECH_MmiSET_7] = '" & TagSrc.RO_ECH_MmiSET_7.Value & "'," & _
+    "[RO_ECH_MmiSET_8] = '" & TagSrc.RO_ECH_MmiSET_8.Value & "',[RO_ECH_MmiSET_9] = '" & TagSrc.RO_ECH_MmiSET_9.Value & "',[RO_ECH_MmiSET_10] = '" & TagSrc.RO_ECH_MmiSET_10.Value & "',[RO_ECH_MmiSET_11] = '" & TagSrc.RO_ECH_MmiSET_11.Value & "',[RO_ECH_MmiSET_12] = '" & TagSrc.RO_ECH_MmiSET_12.Value & "',[RO_ECH_MmiSET_13] = '" & TagSrc.RO_ECH_MmiSET_13.Value & "',[RO_ECH_MmiSET_14] = '" & TagSrc.RO_ECH_MmiSET_14.Value & "',[RO_ECH_MmiSET_15] = '" & TagSrc.RO_ECH_MmiSET_15.Value & "',[RO_EFR_MmiTRIM_1] = '" & TagSrc.RO_EFR_MmiTRIM_1.Value & "',[RO_EFR_MmiTRIM_2] = '" & TagSrc.RO_EFR_MmiTRIM_2.Value & "',[RO_EFR_MmiTRIM_3] = '" & TagSrc.RO_EFR_MmiTRIM_3.Value & "',[RO_EFR_MmiTRIM_4] = '" & TagSrc.RO_EFR_MmiTRIM_4.Value & "',[RO_EFR_MmiTRIM_5] = '" & TagSrc.RO_EFR_MmiTRIM_5.Value & "',[RO_EFR_MmiTRIM_6] = '" & TagSrc.RO_EFR_MmiTRIM_6.Value & "'," & _
+    "[RO_EFR_MmiTRIM_7] = '" & TagSrc.RO_EFR_MmiTRIM_7.Value & "',[RO_EFR_MmiTRIM_8] = '" & TagSrc.RO_EFR_MmiTRIM_8.Value & "',[RO_EFR_MmiTRIM_9] = '" & TagSrc.RO_EFR_MmiTRIM_9.Value & "',[RO_EFR_MmiTRIM_10] = '" & TagSrc.RO_EFR_MmiTRIM_10.Value & "',[RO_EFR_MmiTRIM_11] = '" & TagSrc.RO_EFR_MmiTRIM_11.Value & "',[RO_EFR_MmiTRIM_12] = '" & TagSrc.RO_EFR_MmiTRIM_12.Value & "',[RO_EFR_MmiTRIM_13] = '" & TagSrc.RO_EFR_MmiTRIM_13.Value & "',[RO_EFR_MmiTRIM_14] = '" & TagSrc.RO_EFR_MmiTRIM_14.Value & "',[RO_EFR_MmiTRIM_15] = '" & TagSrc.RO_EFR_MmiTRIM_15.Value & "',[RO_EPR_MmiSET_1] = '" & TagSrc.RO_EPR_MmiSET_1.Value & "',[RO_EPR_MmiSET_2] = '" & TagSrc.RO_EPR_MmiSET_2.Value & "',[RO_EPR_MmiSET_3] = '" & TagSrc.RO_EPR_MmiSET_3.Value & "',[RO_EPR_MmiSET_4] = '" & TagSrc.RO_EPR_MmiSET_4.Value & "',[RO_EPR_MmiSET_5] = '" & TagSrc.RO_EPR_MmiSET_5.Value & "', " & _
+    "[RO_EPR_MmiSET_6] = '" & TagSrc.RO_EPR_MmiSET_6.Value & "',[RO_EPR_MmiSET_7] = '" & TagSrc.RO_EPR_MmiSET_7.Value & "',[RO_EPR_MmiSET_8] = '" & TagSrc.RO_EPR_MmiSET_8.Value & "',[RO_EPR_MmiSET_9] = '" & TagSrc.RO_EPR_MmiSET_9.Value & "',[RO_EPR_MmiSET_10] = '" & TagSrc.RO_EPR_MmiSET_10.Value & "',[RO_EPR_MmiSET_11] = '" & TagSrc.RO_EPR_MmiSET_11.Value & "',[RO_EPR_MmiSET_12] = '" & TagSrc.RO_EPR_MmiSET_12.Value & "',[RO_EPR_MmiSET_13] = '" & TagSrc.RO_EPR_MmiSET_13.Value & "',[RO_EPR_MmiSET_14] = '" & TagSrc.RO_EPR_MmiSET_14.Value & "',[RO_EPR_MmiSET_15] = '" & TagSrc.RO_EPR_MmiSET_15.Value & "',[RO_ETB_MmiTRIM_1] = '" & TagSrc.RO_ETB_MmiTRIM_1.Value & "',[RO_ETB_MmiTRIM_2] = '" & TagSrc.RO_ETB_MmiTRIM_2.Value & "',[RO_ETB_MmiTRIM_3] = '" & TagSrc.RO_ETB_MmiTRIM_3.Value & "',[RO_ETB_MmiTRIM_4] = '" & TagSrc.RO_ETB_MmiTRIM_4.Value & "'," & _
+    "[RO_ETB_MmiTRIM_5] = '" & TagSrc.RO_ETB_MmiTRIM_5.Value & "',[RO_ETB_MmiTRIM_6] = '" & TagSrc.RO_ETB_MmiTRIM_6.Value & "',[RO_ETB_MmiTRIM_7] = '" & TagSrc.RO_ETB_MmiTRIM_7.Value & "',[RO_ETB_MmiTRIM_8] = '" & TagSrc.RO_ETB_MmiTRIM_8.Value & "',[RO_ETB_MmiTRIM_9] = '" & TagSrc.RO_ETB_MmiTRIM_9.Value & "',[RO_ETB_MmiTRIM_10] = '" & TagSrc.RO_ETB_MmiTRIM_10.Value & "',[RO_ETB_MmiTRIM_11] = '" & TagSrc.RO_ETB_MmiTRIM_11.Value & "',[RO_ETB_MmiTRIM_12] = '" & TagSrc.RO_ETB_MmiTRIM_12.Value & "',[RO_ETB_MmiTRIM_13] = '" & TagSrc.RO_ETB_MmiTRIM_13.Value & "',[RO_ETB_MmiTRIM_14] = '" & TagSrc.RO_ETB_MmiTRIM_14.Value & "',[RO_ETB_MmiTRIM_15] = '" & TagSrc.RO_ETB_MmiTRIM_15.Value & "',[RO_RGH_MmiENSPD_1] = '" & TagSrc.RO_RGH_MmiENSPD_1.Value & "',[RO_RGH_MmiENSPD_2] = '" & TagSrc.RO_RGH_MmiENSPD_2.Value & "',[RO_RGH_MmiENSPD_3] = '" & TagSrc.RO_RGH_MmiENSPD_3.Value & "',[RO_RGH_MmiENSPD_4] = '" & TagSrc.RO_RGH_MmiENSPD_4.Value & "'," & _
+    "[RO_RGH_MmiENSPD_5] = '" & TagSrc.RO_RGH_MmiENSPD_5.Value & "',[RO_RGH_MmiENSPD_6] = '" & TagSrc.RO_RGH_MmiENSPD_6.Value & "',[RO_RGH_MmiENSPD_7] = '" & TagSrc.RO_RGH_MmiENSPD_7.Value & "',[RO_RGH_MmiENSPD_8] = '" & TagSrc.RO_RGH_MmiENSPD_8.Value & "',[RO_RGH_MmiENSPD_9] = '" & TagSrc.RO_RGH_MmiENSPD_9.Value & "',[RO_RGH_MmiENSPD_10] = '" & TagSrc.RO_RGH_MmiENSPD_10.Value & "',[RO_RGH_MmiENSPD_11] = '" & TagSrc.RO_RGH_MmiENSPD_11.Value & "',[RO_RGH_MmiENSPD_12] = '" & TagSrc.RO_RGH_MmiENSPD_12.Value & "',[RO_RGH_MmiENSPD_13] = '" & TagSrc.RO_RGH_MmiENSPD_13.Value & "',[RO_RGH_MmiENSPD_14] = '" & TagSrc.RO_RGH_MmiENSPD_14.Value & "',[RO_RGH_MmiENSPD_15] = '" & TagSrc.RO_RGH_MmiENSPD_15.Value & "',[RO_RGH_MmiEXSPD_1] = '" & TagSrc.RO_RGH_MmiEXSPD_1.Value & "',[RO_RGH_MmiEXSPD_2] = '" & TagSrc.RO_RGH_MmiEXSPD_2.Value & "',[RO_RGH_MmiEXSPD_3] = '" & TagSrc.RO_RGH_MmiEXSPD_3.Value & "',[RO_RGH_MmiEXSPD_4] = '" & TagSrc.RO_RGH_MmiEXSPD_4.Value & "'," & _
+    "[RO_RGH_MmiEXSPD_5] = '" & TagSrc.RO_RGH_MmiEXSPD_5.Value & "',[RO_RGH_MmiEXSPD_6] = '" & TagSrc.RO_RGH_MmiEXSPD_6.Value & "',[RO_RGH_MmiEXSPD_7] = '" & TagSrc.RO_RGH_MmiEXSPD_7.Value & "',[RO_RGH_MmiEXSPD_8] = '" & TagSrc.RO_RGH_MmiEXSPD_8.Value & "',[RO_RGH_MmiEXSPD_9] = '" & TagSrc.RO_RGH_MmiEXSPD_9.Value & "',[RO_RGH_MmiEXSPD_10] = '" & TagSrc.RO_RGH_MmiEXSPD_10.Value & "',[RO_RGH_MmiEXSPD_11] = '" & TagSrc.RO_RGH_MmiEXSPD_11.Value & "',[RO_RGH_MmiEXSPD_12] = '" & TagSrc.RO_RGH_MmiEXSPD_12.Value & "',[RO_RGH_MmiEXSPD_13] = '" & TagSrc.RO_RGH_MmiEXSPD_13.Value & "',[RO_RGH_MmiEXSPD_14] = '" & TagSrc.RO_RGH_MmiEXSPD_14.Value & "',[RO_RGH_MmiEXSPD_15] = '" & TagSrc.RO_RGH_MmiEXSPD_15.Value & "',[RO_RGH_MmiRSPD_1] = '" & TagSrc.RO_RGH_MmiRSPD_1.Value & "',[RO_RGH_MmiRSPD_2] = '" & TagSrc.RO_RGH_MmiRSPD_2.Value & "',[RO_RGH_MmiRSPD_3] = '" & TagSrc.RO_RGH_MmiRSPD_3.Value & "',[RO_RGH_MmiRSPD_4] = '" & TagSrc.RO_RGH_MmiRSPD_4.Value & "'," & _
+    "[RO_RGH_MmiRSPD_5] = '" & TagSrc.RO_RGH_MmiRSPD_5.Value & "',[RO_RGH_MmiRSPD_6] = '" & TagSrc.RO_RGH_MmiRSPD_6.Value & "',[RO_RGH_MmiRSPD_7] = '" & TagSrc.RO_RGH_MmiRSPD_7.Value & "',[RO_RGH_MmiRSPD_8] = '" & TagSrc.RO_RGH_MmiRSPD_8.Value & "',[RO_RGH_MmiRSPD_9] = '" & TagSrc.RO_RGH_MmiRSPD_9.Value & "',[RO_RGH_MmiRSPD_10] = '" & TagSrc.RO_RGH_MmiRSPD_10.Value & "',[RO_RGH_MmiRSPD_11] = '" & TagSrc.RO_RGH_MmiRSPD_11.Value & "',[RO_RGH_MmiRSPD_12] = '" & TagSrc.RO_RGH_MmiRSPD_12.Value & "',[RO_RGH_MmiRSPD_13] = '" & TagSrc.RO_RGH_MmiRSPD_13.Value & "',[RO_RGH_MmiRSPD_14] = '" & TagSrc.RO_RGH_MmiRSPD_14.Value & "',[RO_RGH_MmiRSPD_15] = '" & TagSrc.RO_RGH_MmiRSPD_15.Value & "',[RO_SCR_MmiGAP_1] = '" & TagSrc.RO_SCR_MmiGAP_1.Value & "',[RO_SCR_MmiGAP_2] = '" & TagSrc.RO_SCR_MmiGAP_2.Value & "',[RO_SCR_MmiGAP_3] = '" & TagSrc.RO_SCR_MmiGAP_3.Value & "',[RO_SCR_MmiGAP_4] = '" & TagSrc.RO_SCR_MmiGAP_4.Value & "'," & _
+    "[RO_SCR_MmiGAP_5] = '" & TagSrc.RO_SCR_MmiGAP_5.Value & "',[RO_SCR_MmiGAP_6] = '" & TagSrc.RO_SCR_MmiGAP_6.Value & "',[RO_SCR_MmiGAP_7] = '" & TagSrc.RO_SCR_MmiGAP_7.Value & "',[RO_SCR_MmiGAP_8] = '" & TagSrc.RO_SCR_MmiGAP_8.Value & "',[RO_SCR_MmiGAP_9] = '" & TagSrc.RO_SCR_MmiGAP_9.Value & "',[RO_SCR_MmiGAP_10] = '" & TagSrc.RO_SCR_MmiGAP_10.Value & "',[RO_SCR_MmiGAP_11] = '" & TagSrc.RO_SCR_MmiGAP_11.Value & "',[RO_SCR_MmiGAP_12] = '" & TagSrc.RO_SCR_MmiGAP_12.Value & "',[RO_SCR_MmiGAP_13] = '" & TagSrc.RO_SCR_MmiGAP_13.Value & "',[RO_SCR_MmiGAP_14] = '" & TagSrc.RO_SCR_MmiGAP_14.Value & "',[RO_SCR_MmiGAP_15] = '" & TagSrc.RO_SCR_MmiGAP_15.Value & "',[RO_SYS_MmiGRV_1] = '" & TagSrc.RO_SYS_MmiGRV_1.Value & "',[RO_SYS_MmiGRV_2] = '" & TagSrc.RO_SYS_MmiGRV_2.Value & "',[RO_SYS_MmiGRV_3] = '" & TagSrc.RO_SYS_MmiGRV_3.Value & "',[RO_SYS_MmiGRV_4] = '" & TagSrc.RO_SYS_MmiGRV_4.Value & "'," & _
+    "[RO_SYS_MmiGRV_5] = '" & TagSrc.RO_SYS_MmiGRV_5.Value & "',[RO_SYS_MmiGRV_6] = '" & TagSrc.RO_SYS_MmiGRV_6.Value & "',[RO_SYS_MmiGRV_7] = '" & TagSrc.RO_SYS_MmiGRV_7.Value & "',[RO_SYS_MmiGRV_8] = '" & TagSrc.RO_SYS_MmiGRV_8.Value & "',[RO_SYS_MmiGRV_9] = '" & TagSrc.RO_SYS_MmiGRV_9.Value & "',[RO_SYS_MmiGRV_10] = '" & TagSrc.RO_SYS_MmiGRV_10.Value & "',[RO_SYS_MmiGRV_11] = '" & TagSrc.RO_SYS_MmiGRV_11.Value & "',[RO_SYS_MmiGRV_12] = '" & TagSrc.RO_SYS_MmiGRV_12.Value & "',[RO_SYS_MmiGRV_13] = '" & TagSrc.RO_SYS_MmiGRV_13.Value & "',[RO_SYS_MmiGRV_14] = '" & TagSrc.RO_SYS_MmiGRV_14.Value & "',[RO_SYS_MmiGRV_15] = '" & TagSrc.RO_SYS_MmiGRV_15.Value & "',[RO_SYS_MmiPassIND_1] = '" & TagSrc.RO_SYS_MmiPassIND_1.Value & "',[RO_SYS_MmiPassIND_2] = '" & TagSrc.RO_SYS_MmiPassIND_2.Value & "',[RO_SYS_MmiPassIND_3] = '" & TagSrc.RO_SYS_MmiPassIND_3.Value & "',[RO_SYS_MmiPassIND_4] = '" & TagSrc.RO_SYS_MmiPassIND_4.Value & "'," & _
+    "[RO_SYS_MmiPassIND_5] = '" & TagSrc.RO_SYS_MmiPassIND_5.Value & "',[RO_SYS_MmiPassIND_6] = '" & TagSrc.RO_SYS_MmiPassIND_6.Value & "',[RO_SYS_MmiPassIND_7] = '" & TagSrc.RO_SYS_MmiPassIND_7.Value & "',[RO_SYS_MmiPassIND_8] = '" & TagSrc.RO_SYS_MmiPassIND_8.Value & "',[RO_SYS_MmiPassIND_9] = '" & TagSrc.RO_SYS_MmiPassIND_9.Value & "',[RO_SYS_MmiPassIND_10] = '" & TagSrc.RO_SYS_MmiPassIND_10.Value & "',[RO_SYS_MmiPassIND_11] = '" & TagSrc.RO_SYS_MmiPassIND_11.Value & "',[RO_SYS_MmiPassIND_12] = '" & TagSrc.RO_SYS_MmiPassIND_12.Value & "',[RO_SYS_MmiPassIND_13] = '" & TagSrc.RO_SYS_MmiPassIND_13.Value & "',[RO_SYS_MmiPassIND_14] = '" & TagSrc.RO_SYS_MmiPassIND_14.Value & "',[RO_SYS_MmiPassIND_15] = '" & TagSrc.RO_SYS_MmiPassIND_15.Value & "',[RI_SYS_RcpLastPass] = '" & TagSrc.RI_SYS_RcpLastPass.Value & "'" & _
+    "WHERE RcpID = '" & RcpID & "'"
+    cmd.ActiveConnection = cnSrc
+    rsSrc.Open strSql, cnSrc
+   
+    Exit Function
+   
+ErrHandler:
+    MsgBox Err.Description
+   
+End Function
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * *         UPDATE ON SAVE        * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * *       Q_Prod        * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Function UpdateQProd(RcpID As String, cnSrc As ADODB.Connection)
+Dim strSql As String
+Dim cmd As New ADODB.Command
+Dim rsSrc As New ADODB.Recordset
+Dim AllTags As QProdGroup
+Dim TagSrc As QProdTags
+On Error GoTo ErrHandler
+ 
+    AllTags = TGroup.LoadQProdGroup
+    TagSrc = AllTags.DB
+ 
+    strSql = "UPDATE [q_prod] SET" & _
+    "[RcpGrade] = '" & TagSrc.RcpGrade.Value & "',[Q_prdct_HEAT] = '" & TagSrc.Q_prdct_HEAT.Value & "',[Q_prdct_MO] = '" & TagSrc.Q_prdct_MO.Value & "',[Q_prdct_COIL] = '" & TagSrc.Q_prdct_COIL.Value & "',[Q_prdct_COILSn] = '" & TagSrc.Q_prdct_COILSn.Value & "',[Q_prdct_SIZE] = '" & TagSrc.Q_prdct_SIZE.Value & "',[Q_prdct_SPARE1] = '" & TagSrc.Q_prdct_SPARE1.Value & "',[Q_prdct_SPARE2] = '" & TagSrc.Q_prdct_SPARE2.Value & "',[Q_prdct_SPARE3] = '" & TagSrc.Q_prdct_SPARE3.Value & "',[Q_prdct_bil_DROP_count] = '" & TagSrc.Q_prdct_bil_DROP_count.Value & "',[Q_prdct_bil_QUANT] = '" & TagSrc.Q_prdct_bil_QUANT.Value & "',[Q_prdct_bil_ROLLED] = '" & TagSrc.Q_prdct_bil_ROLLED.Value & "',[Q_prdct_bil_SCHED] = '" & TagSrc.Q_prdct_bil_SCHED.Value & "',[Q_prdct_bil_SIZE] = '" & TagSrc.Q_prdct_bil_SIZE.Value & "',[Q_prdct_bil_WEIGHT] = '" & TagSrc.Q_prdct_bil_WEIGHT.Value & "'" & _
+    "WHERE RcpID = '" & RcpID & "'"
+    cmd.ActiveConnection = cnSrc
+    rsSrc.Open strSql, cnSrc
+ 
+    Exit Function
+   
+ErrHandler:
+    MsgBox Err.Description
+ 
+End Function
