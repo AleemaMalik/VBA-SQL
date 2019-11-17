@@ -1,0 +1,198 @@
+Option Explicit
+ 
+Public Type InductoATags
+ 
+    Q_inda_bil_SIZE As Tag
+    Q_inda_EXRATE As Tag
+    Q_inda_MINTEMP As Tag
+    Q_inda_RATE As Tag
+    Q_inda_RBARS As Tag
+    Q_inda_SQBARS As Tag
+    Q_inda_TEMP As Tag
+    RcpGrade As Tag
+    RcpID As Tag
+    RI_DCH_RcpSET_1 As Tag
+    RI_DCH_RcpSET_2 As Tag
+    RI_DCH_RcpSET_3 As Tag
+    RI_DCH_RcpSET_4 As Tag
+    RI_DCH_RcpSET_5 As Tag
+    RI_DCH_RcpSET_6 As Tag
+    RI_DCH_RcpSET_7 As Tag
+    RI_DCH_RcpSET_8 As Tag
+    RI_DCH_RcpSET_9 As Tag
+    RI_DCH_RcpSET_10 As Tag
+    RI_DCH_RcpSET_11 As Tag
+    RI_DCH_RcpSET_12 As Tag
+    RI_DCH_RcpSET_13 As Tag
+    RI_DCH_RcpSET_14 As Tag
+    RI_DCH_RcpSET_15 As Tag
+    RI_ECH_RcpSET_1 As Tag
+    RI_ECH_RcpSET_2 As Tag
+    RI_ECH_RcpSET_3 As Tag
+    RI_ECH_RcpSET_4 As Tag
+    RI_ECH_RcpSET_5 As Tag
+    RI_ECH_RcpSET_6 As Tag
+    RI_ECH_RcpSET_7 As Tag
+    RI_ECH_RcpSET_8 As Tag
+    RI_ECH_RcpSET_9 As Tag
+    RI_ECH_RcpSET_10 As Tag
+    RI_ECH_RcpSET_11 As Tag
+    RI_ECH_RcpSET_12 As Tag
+    RI_ECH_RcpSET_13 As Tag
+    RI_ECH_RcpSET_14 As Tag
+    RI_ECH_RcpSET_15 As Tag
+ 
+End Type
+ 
+Public Type InductoAGroup
+ 
+    DB As InductoATags
+    PLC As InductoATags
+    EDIT As InductoATags
+   
+End Type
+ 
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * *  CREATING PATHS TO TAGS FOLDER  * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Public Function AddInductoAGroup()
+    Dim strFolder As String
+   
+    'HMI Tags
+    strFolder = "RCP\Inducto_A\"
+    AddInductoATag (strFolder)
+ 
+    'PLC Tags
+    strFolder = "PLC\Inducto_A\"
+    AddInductoATag (strFolder)
+   
+    ' Edit Tags
+    ' strFolder = " RCP\Inducto_A"
+    ' AddInductoATag(strFolder)
+   
+End Function
+ 
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+' * * * * * * * * * * * *   ADDING  HMI  TAGS TO THE GROUP  * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Function AddInductoATag(strFolder As String)
+ 
+With ThisDisplay.MyTagGroup
+   
+  .Add ("{" & strFolder & "Q_inda_bil_SIZE}")
+  .Add ("{" & strFolder & "Q_inda_EXRATE}")
+  .Add ("{" & strFolder & "Q_inda_MINTEMP}")
+  .Add ("{" & strFolder & "Q_inda_RATE}")
+  .Add ("{" & strFolder & "Q_inda_RBARS}")
+  .Add ("{" & strFolder & "Q_inda_SQBARS}")
+  .Add ("{" & strFolder & "Q_inda_TEMP}")
+  .Add ("{" & strFolder & "RcpGrade}")
+  .Add ("{" & strFolder & "RcpID}")
+  .Add ("{" & strFolder & "RI_DCH_RcpSET_1}")
+  .Add ("{" & strFolder & "RI_DCH_RcpSET_2}")
+  .Add ("{" & strFolder & "RI_DCH_RcpSET_3}")
+  .Add ("{" & strFolder & "RI_DCH_RcpSET_4}")
+  .Add ("{" & strFolder & "RI_DCH_RcpSET_5}")
+  .Add ("{" & strFolder & "RI_DCH_RcpSET_6}")
+  .Add ("{" & strFolder & "RI_DCH_RcpSET_7}")
+  .Add ("{" & strFolder & "RI_DCH_RcpSET_8}")
+  .Add ("{" & strFolder & "RI_DCH_RcpSET_9}")
+  .Add ("{" & strFolder & "RI_DCH_RcpSET_10}")
+  .Add ("{" & strFolder & "RI_DCH_RcpSET_11}")
+  .Add ("{" & strFolder & "RI_DCH_RcpSET_12}")
+  .Add ("{" & strFolder & "RI_DCH_RcpSET_13}")
+  .Add ("{" & strFolder & "RI_DCH_RcpSET_14}")
+  .Add ("{" & strFolder & "RI_DCH_RcpSET_15}")
+  .Add ("{" & strFolder & "RI_ECH_RcpSET_1}")
+  .Add ("{" & strFolder & "RI_ECH_RcpSET_2}")
+  .Add ("{" & strFolder & "RI_ECH_RcpSET_3}")
+  .Add ("{" & strFolder & "RI_ECH_RcpSET_4}")
+  .Add ("{" & strFolder & "RI_ECH_RcpSET_5}")
+  .Add ("{" & strFolder & "RI_ECH_RcpSET_6}")
+  .Add ("{" & strFolder & "RI_ECH_RcpSET_7}")
+  .Add ("{" & strFolder & "RI_DCH_RcpSET_8}")
+  .Add ("{" & strFolder & "RI_ECH_RcpSET_9}")
+  .Add ("{" & strFolder & "RI_ECH_RcpSET_10}")
+  .Add ("{" & strFolder & "RI_ECH_RcpSET_11}")
+  .Add ("{" & strFolder & "RI_ECH_RcpSET_12}")
+  .Add ("{" & strFolder & "RI_ECH_RcpSET_13}")
+  .Add ("{" & strFolder & "RI_ECH_RcpSET_14}")
+  .Add ("{" & strFolder & "RI_ECH_RcpSET_15}")
+   
+End With
+     
+End Function
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * *     COPYING DB/EDIT/PLC TAGS    * * * * * * * * * * * *
+'This function will copy the contents of any  sourch tag (DB/EDIT/PLC) to the required
+' * * * * * * * * * * * * * * * destination tag (DB/EDIT/PLC) * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Function TransferInductoA(strTagDest As String, strTagSrc As String)
+    Dim AllTags As InductoAGroup
+    Dim TagSrc As InductoATags
+    Dim TagDest As InductoATags
+    AllTags = TGroup.LoadInductoAGroup
+ 
+ 
+    '   Getting Source Tag
+    Select Case strTagSrc
+        Case Is = "Tag"
+            TagSrc = AllTags.DB
+        Case Is = "edit"
+            TagSrc = AllTags.EDIT
+        Case Is = "PLC"
+            TagSrc = AllTags.PLC
+    End Select
+     
+     
+    '   Getting DestinationTag
+    Select Case strTagDest
+        Case Is = "Tag"
+            TagDest = AllTags.DB
+        Case Is = "edit"
+            TagDest = AllTags.EDIT
+        Case Is = "PLC"
+            TagDest = AllTags.PLC
+    End Select
+   
+    TagDest.Q_inda_bil_SIZE.Value = TagSrc.Q_inda_bil_SIZE.Value
+    TagDest.Q_inda_EXRATE.Value = TagSrc.Q_inda_EXRATE.Value
+    TagDest.Q_inda_MINTEMP.Value = TagSrc.Q_inda_MINTEMP.Value
+    TagDest.Q_inda_RATE.Value = TagSrc.Q_inda_RATE.Value
+    TagDest.Q_inda_RBARS.Value = TagSrc.Q_inda_RBARS.Value
+    TagDest.Q_inda_SQBARS.Value = TagSrc.Q_inda_SQBARS.Value
+    TagDest.Q_inda_TEMP.Value = TagSrc.Q_inda_TEMP.Value
+    TagDest.RcpGrade.Value = TagSrc.RcpGrade.Value
+    TagDest.RcpID.Value = TagSrc.RcpID.Value
+    TagDest.RI_DCH_RcpSET_1.Value = TagSrc.RI_DCH_RcpSET_1.Value
+    TagDest.RI_DCH_RcpSET_2.Value = TagSrc.RI_DCH_RcpSET_2.Value
+    TagDest.RI_DCH_RcpSET_3.Value = TagSrc.RI_DCH_RcpSET_3.Value
+    TagDest.RI_DCH_RcpSET_4.Value = TagSrc.RI_DCH_RcpSET_4.Value
+    TagDest.RI_DCH_RcpSET_5.Value = TagSrc.RI_DCH_RcpSET_5.Value
+    TagDest.RI_DCH_RcpSET_6.Value = TagSrc.RI_DCH_RcpSET_6.Value
+    TagDest.RI_DCH_RcpSET_7.Value = TagSrc.RI_DCH_RcpSET_7.Value
+    TagDest.RI_DCH_RcpSET_8.Value = TagSrc.RI_DCH_RcpSET_8.Value
+    TagDest.RI_DCH_RcpSET_9.Value = TagSrc.RI_DCH_RcpSET_9.Value
+    TagDest.RI_DCH_RcpSET_10.Value = TagSrc.RI_DCH_RcpSET_10.Value
+    TagDest.RI_DCH_RcpSET_11.Value = TagSrc.RI_DCH_RcpSET_11.Value
+    TagDest.RI_DCH_RcpSET_12.Value = TagSrc.RI_DCH_RcpSET_12.Value
+    TagDest.RI_DCH_RcpSET_13.Value = TagSrc.RI_DCH_RcpSET_13.Value
+    TagDest.RI_DCH_RcpSET_14.Value = TagSrc.RI_DCH_RcpSET_14.Value
+    TagDest.RI_DCH_RcpSET_15.Value = TagSrc.RI_DCH_RcpSET_15.Value
+    TagDest.RI_ECH_RcpSET_1.Value = TagSrc.RI_ECH_RcpSET_1.Value
+    TagDest.RI_ECH_RcpSET_2.Value = TagSrc.RI_ECH_RcpSET_2.Value
+    TagDest.RI_ECH_RcpSET_3.Value = TagSrc.RI_ECH_RcpSET_3.Value
+    TagDest.RI_ECH_RcpSET_4.Value = TagSrc.RI_ECH_RcpSET_4.Value
+    TagDest.RI_ECH_RcpSET_5.Value = TagSrc.RI_ECH_RcpSET_5.Value
+    TagDest.RI_ECH_RcpSET_6.Value = TagSrc.RI_ECH_RcpSET_6.Value
+    TagDest.RI_ECH_RcpSET_7.Value = TagSrc.RI_ECH_RcpSET_7.Value
+    TagDest.RI_ECH_RcpSET_8.Value = TagSrc.RI_ECH_RcpSET_8.Value
+    TagDest.RI_ECH_RcpSET_9.Value = TagSrc.RI_ECH_RcpSET_9.Value
+    TagDest.RI_ECH_RcpSET_10.Value = TagSrc.RI_ECH_RcpSET_10.Value
+    TagDest.RI_ECH_RcpSET_11.Value = TagSrc.RI_ECH_RcpSET_11.Value
+    TagDest.RI_ECH_RcpSET_12.Value = TagSrc.RI_ECH_RcpSET_12.Value
+    TagDest.RI_ECH_RcpSET_13.Value = TagSrc.RI_ECH_RcpSET_13.Value
+    TagDest.RI_ECH_RcpSET_14.Value = TagSrc.RI_ECH_RcpSET_14.Value
+    TagDest.RI_ECH_RcpSET_15.Value = TagSrc.RI_ECH_RcpSET_15.Value
+   
+End Function
