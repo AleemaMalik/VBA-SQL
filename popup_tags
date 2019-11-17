@@ -1,0 +1,73 @@
+' PopUpTagModule
+' All the popups on the R_Recipe_Serach screen are trigered by the tags below.
+' AddPopUpTag is called as soon as the display is running so that all tags can be added to the tag group once
+' Calling the fucntion LoadPopUpTags in any routine will load all the tags and give you acccess to them with their current values
+Option Explicit
+ 
+Public Type PopUpTags
+ 
+    PopUp_SaveRcpUpdated As Tag
+    PopUp_SaveRcpSaved As Tag
+    PopUp_SaveFailed As Tag
+    PopUp_MasterComplete As Tag
+    PopUp_QComplete As Tag
+    PopUp_K2Complete As Tag
+    PopUp_KComplete As Tag
+    PopUp_IndAComplete As Tag
+    PopUp_IndBComplete As Tag
+    PopUp_QProdComplete As Tag
+   
+ 
+End Type
+ 
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+' * * * * * * * * * * *  ADDING  HMI  TAGS TO THE  TAG GROUP  * * * * * * * * * * * * * *
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Function AddPopUpTag()
+    Dim strFolder As String
+    strFolder = "BO\"
+   
+    With ThisDisplay.MyTagGroup
+   
+        .Add ("{" & strFolder & "PopUp_SaveRcpUpdated}")
+        .Add ("{" & strFolder & "PopUp_SaveRcpSaved}")
+        .Add ("{" & strFolder & "PopUp_SaveFailed}")
+        .Add ("{" & strFolder & "PopUp_MasterComplete}")
+        .Add ("{" & strFolder & "PopUp_QComplete}")
+        .Add ("{" & strFolder & "PopUp_K2Complete}")
+        .Add ("{" & strFolder & "PopUp_KComplete}")
+        .Add ("{" & strFolder & "PopUp_IndAComplete}")
+        .Add ("{" & strFolder & "PopUp_IndBComplete}")
+        .Add ("{" & strFolder & "PopUp_QProdComplete}")
+       
+    End With
+ 
+End Function
+ 
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+' * * * * * * * * * * * *    ADDING TAGS TO THE GROUP   * * * * * * * * * * * * * * * * *
+' * Whenever any of the popuptags are needed, calling this function will load them all  *
+' * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+Function LoadPopUpTags() As PopUpTags
+    Dim TagP As PopUpTags
+    Dim strFolder As String
+    strFolder = "BO\"
+   
+    With ThisDisplay.MyTagGroup
+ 
+        Set TagP.PopUp_SaveFailed = .Item("{" & strFolder & "PopUp_SaveFailed}")
+        Set TagP.PopUp_SaveRcpSaved = .Item("{" & strFolder & "PopUp_SaveRcpSaved}")
+        Set TagP.PopUp_SaveRcpUpdated = .Item("{" & strFolder & "PopUp_SaveRcpUpdated}")
+        Set TagP.PopUp_MasterComplete = .Item("{" & strFolder & "PopUp_MasterComplete}")
+        Set TagP.PopUp_QComplete = .Item("{" & strFolder & "PopUp_QComplete}")
+        Set TagP.PopUp_K2Complete = .Item("{" & strFolder & "PopUp_K2Complete}")
+        Set TagP.PopUp_KComplete = .Item("{" & strFolder & "PopUp_KComplete}")
+        Set TagP.PopUp_IndAComplete = .Item("{" & strFolder & "PopUp_IndAComplete}")
+        Set TagP.PopUp_IndBComplete = .Item("{" & strFolder & "PopUp_IndBComplete}")
+        Set TagP.PopUp_QProdComplete = .Item("{" & strFolder & "PopUp_QProdComplete}")
+       
+    End With
+   
+    LoadPopUpTags = TagP
+     
+End Function
